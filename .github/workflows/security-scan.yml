@@ -72,7 +72,8 @@ jobs:
           echo "📦 Running Snyk SCA scan on requirements.txt..."
           echo "Current directory: $(pwd)"
           echo "Scanning requirements.txt (328 packages)..."
-          cd app && snyk test --file=requirements.txt --package-manager=pip --skip-unresolved --json > ../snyk-requirements.json || true
+          cd app
+          snyk test --file=requirements.txt --package-manager=pip --skip-unresolved --json > ../snyk-requirements.json || true
           cd ..
           echo "Requirements.txt scan complete:"
           ls -lh snyk-requirements.json
