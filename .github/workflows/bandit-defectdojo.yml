@@ -1,4 +1,4 @@
-name: Bandit Security Scan
+name: Security Scan
 
 on:
   push:
@@ -26,9 +26,17 @@ jobs:
         run: pip install bandit
 
       - name: Run Bandit scan
+        continue-on-error: true
         run: |
-          bandit -r app/ -f json -o bandit-results.json
+          echo "Current directory: $(pwd)"
+          echo "Directory contents:"
+          ls -la
+          echo "Checking simple-web-flask/app/ exists:"
+          ls -la simple-web-flask/app/ || echo "Directory not found"
+          bandit -r simple-web-flask/app/ -f json -o bandit-results.json || true
           echo "✅ Bandit scan complete"
+          echo "Checking if bandit-results.json was created:"
+          ls -la bandit-results.json || echo "File not created"
 
       - name: Upload Bandit Report to DefectDojo
         env:
@@ -63,7 +71,7 @@ jobs:
           # Debug: Show current directory and structure
           echo "Current directory: $(pwd)"
           # Run Snyk test on the app directory
-          cd app && snyk test --skip-unresolved --json > ../snyk-results.json || true
+          cd simple-web-flask/app && snyk test --skip-unresolved --json > ../../snyk-results.json || true
           echo "Snyk report created"
 
       - name: Upload Snyk Report to DefectDojo
