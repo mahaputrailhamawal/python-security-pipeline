@@ -64,50 +64,91 @@ jobs:
           snyk config get api
           echo "✅ Snyk authentication complete"
 
-      - name: Run SNYK SCA
+      - name: Run SNYK SCA - Requirements.txt
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          echo "📦 Running Snyk SCA scan..."
+          echo "📦 Running Snyk SCA scan on requirements.txt..."
           echo "Current directory: $(pwd)"
-          echo "Contents of app/:"
-          ls -la app/
-          echo "Running Snyk scan..."
-          cd app && snyk test --skip-unresolved --json > ../snyk-results.json || true
+          echo "Scanning requirements.txt (328 packages)..."
+          cd app && snyk test --file=requirements.txt --package-manager=pip --skip-unresolved --json > ../snyk-requirements.json || true
           cd ..
-          echo "Scan complete. Checking results file:"
-          ls -lh snyk-results.json
-          echo "First 500 bytes of results:"
-          head -c 500 snyk-results.json
-          echo ""
-          echo "✅ Snyk scan complete"
+          echo "Requirements.txt scan complete:"
+          ls -lh snyk-requirements.json
 
-      - name: Upload Snyk Report to DefectDojo
+      - name: Run SNYK SCA - Poetry.lock
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          echo "📦 Running Snyk SCA scan on poetry.lock..."
+          cd app && snyk test --skip-unresolved --json > ../snyk-poetry.json || true
+          cd ..
+          echo "Poetry.lock scan complete:"
+          ls -lh snyk-poetry.json
+          echo "✅ Both Snyk scans complete"
+
+      - name: Upload Snyk Requirements.txt Report to DefectDojo
+        if: always() && hashFiles('snyk-requirements.json') != ''
         env:
           DD_URL: ${{ secrets.DEFECTDOJO_URL }}
           DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
           PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
           ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
         run: |
-          echo "Checking if snyk-results.json was created:"
-          ls -la snyk-results.json || echo "Files not created"
-          
+          echo "📤 Uploading Snyk requirements.txt scan to DefectDojo..."
+          ls -lh snyk-requirements.json
+
           curl -X POST "${DD_URL}/api/v2/import-scan/" \
             -H "Authorization: Token ${DD_TOKEN}" \
-            -F "file=@snyk-results.json" \
+            -F "file=@snyk-requirements.json" \
             -F "scan_type=Snyk Scan" \
             -F "product_name=${PRODUCT_NAME}" \
             -F "engagement_name=${ENGAGEMENT_SNYK}" \
             -F "active=true" \
             -F "minimum_severity=Low" \
             -F "lead=1" \
-            -F "environment=Production"
+            -F "environment=Production - requirements.txt"
 
-      - name: Upload artifact
+          echo "✅ Requirements.txt scan uploaded"
+
+      - name: Upload Snyk Poetry.lock Report to DefectDojo
+        if: always() && hashFiles('snyk-poetry.json') != ''
+        env:
+          DD_URL: ${{ secrets.DEFECTDOJO_URL }}
+          DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
+          PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
+          ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
+        run: |
+          echo "📤 Uploading Snyk poetry.lock scan to DefectDojo..."
+          ls -lh snyk-poetry.json
+
+          curl -X POST "${DD_URL}/api/v2/import-scan/" \
+            -H "Authorization: Token ${DD_TOKEN}" \
+            -F "file=@snyk-poetry.json" \
+            -F "scan_type=Snyk Scan" \
+            -F "product_name=${PRODUCT_NAME}" \
+            -F "engagement_name=${ENGAGEMENT_SNYK}" \
+            -F "active=true" \
+            -F "minimum_severity=Low" \
+            -F "lead=1" \
+            -F "environment=Production - poetry.lock"
+
+          echo "✅ Poetry.lock scan uploaded"
+
+      - name: Upload Snyk Requirements Artifact
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: snyk-results
-          path: snyk-results.json
+          name: snyk-requirements-results
+          path: snyk-requirements.json
+          retention-days: 30
+
+      - name: Upload Snyk Poetry Artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: snyk-poetry-results
+          path: snyk-poetry.json
           retention-days: 30
