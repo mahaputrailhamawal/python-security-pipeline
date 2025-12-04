@@ -63,7 +63,7 @@ jobs:
           # Debug: Show current directory and structure
           echo "Current directory: $(pwd)"
           # Run Snyk test on the app directory
-          cd app && snyk test --skip-unresolved --json > ../snyk-results.json || true
+          cd simple-web-flask/app && snyk test --skip-unresolved --json > ../../snyk-results.json || true
           echo "Snyk report created"
 
       - name: Upload Snyk Report to DefectDojo
