@@ -70,7 +70,7 @@ jobs:
         run: |
           echo "📦 Running Snyk SCA scan on requirements.txt ONLY..."
           echo "Current directory: $(pwd)"
-          snyk test app/ --skip-unresolved --json > snyk-results.json
+          snyk test app/ --file=requirements.txt --package-manager=pip --skip-unresolved --json > snyk-results.json
           
       # - name: Run SNYK SCA - Poetry.lock
       #   continue-on-error: true
