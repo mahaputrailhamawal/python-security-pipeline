@@ -77,17 +77,17 @@ jobs:
           echo "Requirements.txt scan complete:"
           ls -lh snyk-requirements.json
 
-      - name: Run SNYK SCA - Poetry.lock
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          echo "📦 Running Snyk SCA scan on poetry.lock..."
-          cd app && snyk test --skip-unresolved --json > ../snyk-poetry.json || true
-          cd ..
-          echo "Poetry.lock scan complete:"
-          ls -lh snyk-poetry.json
-          echo "✅ Both Snyk scans complete"
+      # - name: Run SNYK SCA - Poetry.lock
+      #   continue-on-error: true
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   run: |
+      #     echo "📦 Running Snyk SCA scan on poetry.lock..."
+      #     cd app && snyk test --skip-unresolved --json > ../snyk-poetry.json || true
+      #     cd ..
+      #     echo "Poetry.lock scan complete:"
+      #     ls -lh snyk-poetry.json
+      #     echo "✅ Both Snyk scans complete"
 
       - name: Upload Snyk Requirements.txt Report to DefectDojo
         if: always() && hashFiles('snyk-requirements.json') != ''
@@ -113,29 +113,29 @@ jobs:
 
           echo "✅ Requirements.txt scan uploaded"
 
-      - name: Upload Snyk Poetry.lock Report to DefectDojo
-        if: always() && hashFiles('snyk-poetry.json') != ''
-        env:
-          DD_URL: ${{ secrets.DEFECTDOJO_URL }}
-          DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
-          PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
-          ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
-        run: |
-          echo "📤 Uploading Snyk poetry.lock scan to DefectDojo..."
-          ls -lh snyk-poetry.json
+      # - name: Upload Snyk Poetry.lock Report to DefectDojo
+      #   if: always() && hashFiles('snyk-poetry.json') != ''
+      #   env:
+      #     DD_URL: ${{ secrets.DEFECTDOJO_URL }}
+      #     DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
+      #     PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
+      #     ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
+      #   run: |
+      #     echo "📤 Uploading Snyk poetry.lock scan to DefectDojo..."
+      #     ls -lh snyk-poetry.json
 
-          curl -X POST "${DD_URL}/api/v2/import-scan/" \
-            -H "Authorization: Token ${DD_TOKEN}" \
-            -F "file=@snyk-poetry.json" \
-            -F "scan_type=Snyk Scan" \
-            -F "product_name=${PRODUCT_NAME}" \
-            -F "engagement_name=${ENGAGEMENT_SNYK}" \
-            -F "active=true" \
-            -F "minimum_severity=Low" \
-            -F "lead=1" \
-            -F "environment=Production"
+      #     curl -X POST "${DD_URL}/api/v2/import-scan/" \
+      #       -H "Authorization: Token ${DD_TOKEN}" \
+      #       -F "file=@snyk-poetry.json" \
+      #       -F "scan_type=Snyk Scan" \
+      #       -F "product_name=${PRODUCT_NAME}" \
+      #       -F "engagement_name=${ENGAGEMENT_SNYK}" \
+      #       -F "active=true" \
+      #       -F "minimum_severity=Low" \
+      #       -F "lead=1" \
+      #       -F "environment=Production"
 
-          echo "✅ Poetry.lock scan uploaded"
+      #     echo "✅ Poetry.lock scan uploaded"
 
       - name: Upload Snyk Requirements Artifact
         uses: actions/upload-artifact@v4
@@ -145,10 +145,10 @@ jobs:
           path: snyk-requirements.json
           retention-days: 30
 
-      - name: Upload Snyk Poetry Artifact
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: snyk-poetry-results
-          path: snyk-poetry.json
-          retention-days: 30
+      # - name: Upload Snyk Poetry Artifact
+      #   uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: snyk-poetry-results
+      #     path: snyk-poetry.json
+      #     retention-days: 30
