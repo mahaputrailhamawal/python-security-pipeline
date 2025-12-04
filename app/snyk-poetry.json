@@ -1,0 +1,2149 @@
+{
+  "vulnerabilities": [
+    {
+      "id": "SNYK-PYTHON-JINJA2-8548181",
+      "title": "Template Injection",
+      "CVSSv3": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+      "credit": [
+        "Lydxn"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,3.1.5)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.1.5"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 5.4,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "jinja2",
+      "references": [
+        {
+          "url": "https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/pallets/jinja/releases/tag/3.1.5",
+          "title": "GitHub Release"
+        },
+        {
+          "url": "https://jinja.palletsprojects.com/en/stable/changes/%23version-3-1-5",
+          "title": "Jinja Chnanges"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 6.3,
+          "modificationTime": "2024-12-31T14:46:25.398031Z"
+        },
+        {
+          "assigner": "SUSE",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 8.1,
+          "modificationTime": "2025-01-04T11:01:11.700479Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.4,
+          "cvssVersion": "4.0",
+          "modificationTime": "2024-12-24T09:53:47.782999Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.7,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-12-24T09:53:47.782999Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "baseScore": 6.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-12-31T14:46:25.398031Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "assigner": "SUSE",
+          "severity": "high",
+          "baseScore": 8.1,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-01-04T11:01:11.700479Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Template Injection when an attacker controls the content of a template. This is due to an oversight in the sandboxed environment's method detection when using a stored reference to a malicious string's `format` method, which can then be executed through a filter.\r\n\r\n**Note:** This is only exploitable through custom filters in an application.\n## Remediation\nUpgrade `jinja2` to version 3.1.5 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4)\n- [GitHub Release](https://github.com/pallets/jinja/releases/tag/3.1.5)\n- [Jinja Chnanges](https://jinja.palletsprojects.com/en/stable/changes/#version-3-1-5)\n",
+      "epssDetails": {
+        "percentile": "0.26867",
+        "probability": "0.00094",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2024-56326"
+        ],
+        "CWE": [
+          "CWE-1336"
+        ],
+        "GHSA": [
+          "GHSA-q2x7-8rv6-6q7h"
+        ]
+      },
+      "packageName": "jinja2",
+      "proprietary": false,
+      "creationTime": "2024-12-24T09:40:26.148979Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2024-12-23T16:40:18Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2024-12-24T09:53:47.773828Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-01-04T11:01:11.700479Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.1.0",
+        "flask@3.0.3",
+        "jinja2@3.1.4"
+      ],
+      "upgradePath": [
+        false,
+        "flask@3.0.3"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "jinja2",
+      "version": "3.1.4"
+    },
+    {
+      "id": "SNYK-PYTHON-JINJA2-8548987",
+      "title": "Improper Neutralization",
+      "CVSSv3": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+      "credit": [
+        "Simon Leiner"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,3.1.5)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.1.5"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 5.4,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "jinja2",
+      "references": [
+        {
+          "url": "https://github.com/pallets/jinja/commit/767b23617628419ae3709ccfb02f9602ae9fe51f",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/pallets/jinja/issues/1792",
+          "title": "GitHub Issue"
+        },
+        {
+          "url": "https://github.com/pallets/jinja/pull/1852",
+          "title": "GitHub PR"
+        },
+        {
+          "url": "https://github.com/pallets/jinja/releases/tag/3.1.5",
+          "title": "GitHub Release"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 7.3,
+          "modificationTime": "2024-12-24T14:17:27.023982Z"
+        },
+        {
+          "assigner": "SUSE",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 8.1,
+          "modificationTime": "2025-01-04T11:01:10.944302Z"
+        },
+        {
+          "assigner": "NVD",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "cvssV3BaseScore": 8.8,
+          "modificationTime": "2025-09-23T01:14:01.784017Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.4,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-09-23T08:02:44.358322Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-09-23T08:02:44.358322Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "Red Hat",
+          "severity": "high",
+          "baseScore": 7.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-12-24T14:17:27.023982Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "assigner": "SUSE",
+          "severity": "high",
+          "baseScore": 8.1,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-01-04T11:01:10.944302Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "assigner": "NVD",
+          "severity": "high",
+          "baseScore": 8.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-09-23T01:14:01.784017Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Improper Neutralization when importing a macro in a template whose filename is also a template. This will result in a `SyntaxError: f-string: invalid syntax` error message because the filename is not properly escaped, indicating that it is being treated as a format string.\r\n\r\n**Note:** This is only exploitable when the attacker controls both the content and filename of a template and the application executes untrusted templates.\n## Remediation\nUpgrade `jinja2` to version 3.1.5 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/jinja/commit/767b23617628419ae3709ccfb02f9602ae9fe51f)\n- [GitHub Issue](https://github.com/pallets/jinja/issues/1792)\n- [GitHub PR](https://github.com/pallets/jinja/pull/1852)\n- [GitHub Release](https://github.com/pallets/jinja/releases/tag/3.1.5)\n",
+      "epssDetails": {
+        "percentile": "0.08291",
+        "probability": "0.00031",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2024-56201"
+        ],
+        "CWE": [
+          "CWE-150"
+        ],
+        "GHSA": [
+          "GHSA-gmj6-6f8f-6699"
+        ]
+      },
+      "packageName": "jinja2",
+      "proprietary": false,
+      "creationTime": "2024-12-24T11:51:17.721758Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2024-12-23T17:54:12Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2024-12-24T12:02:30.762445Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-09-23T08:02:44.358322Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.1.0",
+        "flask@3.0.3",
+        "jinja2@3.1.4"
+      ],
+      "upgradePath": [
+        false,
+        "flask@3.0.3"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "jinja2",
+      "version": "3.1.4"
+    },
+    {
+      "id": "SNYK-PYTHON-JINJA2-9292516",
+      "title": "Template Injection",
+      "CVSSv3": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+      "credit": [
+        "securingapps"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,3.1.6)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.1.6"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 5.4,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "jinja2",
+      "references": [
+        {
+          "url": "https://github.com/pallets/jinja/commit/90457bbf33b8662926ae65cdde4c4c32e756e403",
+          "title": "GitHub Commit"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "SUSE",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 6.5,
+          "modificationTime": "2025-03-20T11:02:43.031580Z"
+        },
+        {
+          "assigner": "Red Hat",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 7.3,
+          "modificationTime": "2025-03-07T06:01:18.866548Z"
+        },
+        {
+          "assigner": "NVD",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "cvssV3BaseScore": 8.8,
+          "modificationTime": "2025-09-23T01:14:06.791810Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.4,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-09-23T08:02:28.951339Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-09-23T08:02:28.951339Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "SUSE",
+          "severity": "medium",
+          "baseScore": 6.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-03-20T11:02:43.031580Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "Red Hat",
+          "severity": "high",
+          "baseScore": 7.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-03-07T06:01:18.866548Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "assigner": "NVD",
+          "severity": "high",
+          "baseScore": 8.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-09-23T01:14:06.791810Z"
+        }
+      ],
+      "description": "## Overview\n[Jinja2](https://pypi.org/project/Jinja2/) is a template engine written in pure Python. It provides a Django inspired non-XML syntax but supports inline expressions and an optional sandboxed environment.\n\nAffected versions of this package are vulnerable to Template Injection through the `|attr` filter. An attacker that controls the content of a template can escape the sandbox and execute arbitrary Python code by using the `|attr` filter to get a reference to a string's plain format method, bypassing the environment's attribute lookup.\r\n\r\n**Note:**\r\n\r\nThis is only exploitable if the application executes untrusted templates.\n## Remediation\nUpgrade `Jinja2` to version 3.1.6 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/jinja/commit/90457bbf33b8662926ae65cdde4c4c32e756e403)\n",
+      "epssDetails": {
+        "percentile": "0.29925",
+        "probability": "0.00109",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-27516"
+        ],
+        "CWE": [
+          "CWE-1336"
+        ],
+        "GHSA": [
+          "GHSA-cpwx-vrp4-4pq7"
+        ]
+      },
+      "packageName": "jinja2",
+      "proprietary": false,
+      "creationTime": "2025-03-06T07:35:01.694695Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-03-05T20:40:14Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2025-03-06T07:38:27.746434Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-09-23T08:02:28.951339Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.1.0",
+        "flask@3.0.3",
+        "jinja2@3.1.4"
+      ],
+      "upgradePath": [
+        false,
+        "flask@3.0.3"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "jinja2",
+      "version": "3.1.4"
+    },
+    {
+      "id": "SNYK-PYTHON-JINJA2-8548181",
+      "title": "Template Injection",
+      "CVSSv3": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+      "credit": [
+        "Lydxn"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,3.1.5)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.1.5"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 5.4,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "jinja2",
+      "references": [
+        {
+          "url": "https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/pallets/jinja/releases/tag/3.1.5",
+          "title": "GitHub Release"
+        },
+        {
+          "url": "https://jinja.palletsprojects.com/en/stable/changes/%23version-3-1-5",
+          "title": "Jinja Chnanges"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 6.3,
+          "modificationTime": "2024-12-31T14:46:25.398031Z"
+        },
+        {
+          "assigner": "SUSE",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 8.1,
+          "modificationTime": "2025-01-04T11:01:11.700479Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.4,
+          "cvssVersion": "4.0",
+          "modificationTime": "2024-12-24T09:53:47.782999Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.7,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-12-24T09:53:47.782999Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "baseScore": 6.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-12-31T14:46:25.398031Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "assigner": "SUSE",
+          "severity": "high",
+          "baseScore": 8.1,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-01-04T11:01:11.700479Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Template Injection when an attacker controls the content of a template. This is due to an oversight in the sandboxed environment's method detection when using a stored reference to a malicious string's `format` method, which can then be executed through a filter.\r\n\r\n**Note:** This is only exploitable through custom filters in an application.\n## Remediation\nUpgrade `jinja2` to version 3.1.5 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4)\n- [GitHub Release](https://github.com/pallets/jinja/releases/tag/3.1.5)\n- [Jinja Chnanges](https://jinja.palletsprojects.com/en/stable/changes/#version-3-1-5)\n",
+      "epssDetails": {
+        "percentile": "0.26867",
+        "probability": "0.00094",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2024-56326"
+        ],
+        "CWE": [
+          "CWE-1336"
+        ],
+        "GHSA": [
+          "GHSA-q2x7-8rv6-6q7h"
+        ]
+      },
+      "packageName": "jinja2",
+      "proprietary": false,
+      "creationTime": "2024-12-24T09:40:26.148979Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2024-12-23T16:40:18Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2024-12-24T09:53:47.773828Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-01-04T11:01:11.700479Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.1.0",
+        "flask-sqlalchemy@3.1.1",
+        "flask@3.0.3",
+        "jinja2@3.1.4"
+      ],
+      "upgradePath": [
+        false,
+        "flask-sqlalchemy@3.1.1"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "jinja2",
+      "version": "3.1.4"
+    },
+    {
+      "id": "SNYK-PYTHON-JINJA2-8548987",
+      "title": "Improper Neutralization",
+      "CVSSv3": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+      "credit": [
+        "Simon Leiner"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,3.1.5)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.1.5"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 5.4,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "jinja2",
+      "references": [
+        {
+          "url": "https://github.com/pallets/jinja/commit/767b23617628419ae3709ccfb02f9602ae9fe51f",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/pallets/jinja/issues/1792",
+          "title": "GitHub Issue"
+        },
+        {
+          "url": "https://github.com/pallets/jinja/pull/1852",
+          "title": "GitHub PR"
+        },
+        {
+          "url": "https://github.com/pallets/jinja/releases/tag/3.1.5",
+          "title": "GitHub Release"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "Red Hat",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 7.3,
+          "modificationTime": "2024-12-24T14:17:27.023982Z"
+        },
+        {
+          "assigner": "SUSE",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 8.1,
+          "modificationTime": "2025-01-04T11:01:10.944302Z"
+        },
+        {
+          "assigner": "NVD",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "cvssV3BaseScore": 8.8,
+          "modificationTime": "2025-09-23T01:14:01.784017Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.4,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-09-23T08:02:44.358322Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-09-23T08:02:44.358322Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "Red Hat",
+          "severity": "high",
+          "baseScore": 7.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-12-24T14:17:27.023982Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "assigner": "SUSE",
+          "severity": "high",
+          "baseScore": 8.1,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-01-04T11:01:10.944302Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "assigner": "NVD",
+          "severity": "high",
+          "baseScore": 8.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-09-23T01:14:01.784017Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Improper Neutralization when importing a macro in a template whose filename is also a template. This will result in a `SyntaxError: f-string: invalid syntax` error message because the filename is not properly escaped, indicating that it is being treated as a format string.\r\n\r\n**Note:** This is only exploitable when the attacker controls both the content and filename of a template and the application executes untrusted templates.\n## Remediation\nUpgrade `jinja2` to version 3.1.5 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/jinja/commit/767b23617628419ae3709ccfb02f9602ae9fe51f)\n- [GitHub Issue](https://github.com/pallets/jinja/issues/1792)\n- [GitHub PR](https://github.com/pallets/jinja/pull/1852)\n- [GitHub Release](https://github.com/pallets/jinja/releases/tag/3.1.5)\n",
+      "epssDetails": {
+        "percentile": "0.08291",
+        "probability": "0.00031",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2024-56201"
+        ],
+        "CWE": [
+          "CWE-150"
+        ],
+        "GHSA": [
+          "GHSA-gmj6-6f8f-6699"
+        ]
+      },
+      "packageName": "jinja2",
+      "proprietary": false,
+      "creationTime": "2024-12-24T11:51:17.721758Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2024-12-23T17:54:12Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2024-12-24T12:02:30.762445Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-09-23T08:02:44.358322Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.1.0",
+        "flask-sqlalchemy@3.1.1",
+        "flask@3.0.3",
+        "jinja2@3.1.4"
+      ],
+      "upgradePath": [
+        false,
+        "flask-sqlalchemy@3.1.1"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "jinja2",
+      "version": "3.1.4"
+    },
+    {
+      "id": "SNYK-PYTHON-JINJA2-9292516",
+      "title": "Template Injection",
+      "CVSSv3": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+      "credit": [
+        "securingapps"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,3.1.6)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.1.6"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 5.4,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "jinja2",
+      "references": [
+        {
+          "url": "https://github.com/pallets/jinja/commit/90457bbf33b8662926ae65cdde4c4c32e756e403",
+          "title": "GitHub Commit"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "SUSE",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 6.5,
+          "modificationTime": "2025-03-20T11:02:43.031580Z"
+        },
+        {
+          "assigner": "Red Hat",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "cvssV3BaseScore": 7.3,
+          "modificationTime": "2025-03-07T06:01:18.866548Z"
+        },
+        {
+          "assigner": "NVD",
+          "severity": "high",
+          "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "cvssV3BaseScore": 8.8,
+          "modificationTime": "2025-09-23T01:14:06.791810Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.4,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-09-23T08:02:28.951339Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "assigner": "Snyk",
+          "severity": "high",
+          "baseScore": 8.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-09-23T08:02:28.951339Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "SUSE",
+          "severity": "medium",
+          "baseScore": 6.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-03-20T11:02:43.031580Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+          "assigner": "Red Hat",
+          "severity": "high",
+          "baseScore": 7.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-03-07T06:01:18.866548Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+          "assigner": "NVD",
+          "severity": "high",
+          "baseScore": 8.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-09-23T01:14:06.791810Z"
+        }
+      ],
+      "description": "## Overview\n[Jinja2](https://pypi.org/project/Jinja2/) is a template engine written in pure Python. It provides a Django inspired non-XML syntax but supports inline expressions and an optional sandboxed environment.\n\nAffected versions of this package are vulnerable to Template Injection through the `|attr` filter. An attacker that controls the content of a template can escape the sandbox and execute arbitrary Python code by using the `|attr` filter to get a reference to a string's plain format method, bypassing the environment's attribute lookup.\r\n\r\n**Note:**\r\n\r\nThis is only exploitable if the application executes untrusted templates.\n## Remediation\nUpgrade `Jinja2` to version 3.1.6 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/jinja/commit/90457bbf33b8662926ae65cdde4c4c32e756e403)\n",
+      "epssDetails": {
+        "percentile": "0.29925",
+        "probability": "0.00109",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-27516"
+        ],
+        "CWE": [
+          "CWE-1336"
+        ],
+        "GHSA": [
+          "GHSA-cpwx-vrp4-4pq7"
+        ]
+      },
+      "packageName": "jinja2",
+      "proprietary": false,
+      "creationTime": "2025-03-06T07:35:01.694695Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-03-05T20:40:14Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2025-03-06T07:38:27.746434Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-09-23T08:02:28.951339Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.1.0",
+        "flask-sqlalchemy@3.1.1",
+        "flask@3.0.3",
+        "jinja2@3.1.4"
+      ],
+      "upgradePath": [
+        false,
+        "flask-sqlalchemy@3.1.1"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "jinja2",
+      "version": "3.1.4"
+    },
+    {
+      "id": "SNYK-PYTHON-MYSQLCONNECTORPYTHON-9724724",
+      "title": "Arbitrary File Read",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:N/A:N",
+      "credit": [
+        "Jakub Barton"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,9.3.0)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "9.3.0"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 5.7,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "mysql-connector-python",
+      "references": [
+        {
+          "url": "https://github.com/mysql/mysql-connector-python/commit/68a6b5157838d1a2eea0b52d5542ac3e7ebaaa8f",
+          "title": "GitHub Commit"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:N/A:N",
+          "cvssV3BaseScore": 4.8,
+          "modificationTime": "2025-04-16T01:14:52.288175Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.7,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-04-16T14:58:26.624856Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:N/A:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 4.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-04-16T14:58:26.624856Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:N/A:N",
+          "assigner": "NVD",
+          "severity": "medium",
+          "baseScore": 4.8,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-04-16T01:14:52.288175Z"
+        }
+      ],
+      "description": "## Overview\n[mysql-connector-python](https://pypi.org/project/mysql-connector-python/) is a MySQL driver written in Python which does not depend on MySQL C client libraries and implements the DB API v2.0 specification (PEP-249).\n\nAffected versions of this package are vulnerable to Arbitrary File Read when executing `LOCAL INFILE` statements due to improper validation of the `filename` field. An attacker could access critical data by exploiting this vulnerability.\n\n## Details\n\nA Directory Traversal attack (also known as path traversal) aims to access files and directories that are stored outside the intended folder. By manipulating files with \"dot-dot-slash (../)\" sequences and its variations, or by using absolute file paths, it may be possible to access arbitrary files and directories stored on file system, including application source code, configuration, and other critical system files.\n\nDirectory Traversal vulnerabilities can be generally divided into two types:\n\n- **Information Disclosure**: Allows the attacker to gain information about the folder structure or read the contents of sensitive files on the system.\n\n`st` is a module for serving static files on web pages, and contains a [vulnerability of this type](https://snyk.io/vuln/npm:st:20140206). In our example, we will serve files from the `public` route.\n\nIf an attacker requests the following URL from our server, it will in turn leak the sensitive private key of the root user.\n\n```\ncurl http://localhost:8080/public/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/id_rsa\n```\n**Note** `%2e` is the URL encoded version of `.` (dot).\n\n- **Writing arbitrary files**: Allows the attacker to create or replace existing files. This type of vulnerability is also known as `Zip-Slip`. \n\nOne way to achieve this is by using a malicious `zip` archive that holds path traversal filenames. When each filename in the zip archive gets concatenated to the target extraction folder, without validation, the final path ends up outside of the target folder. If an executable or a configuration file is overwritten with a file containing malicious code, the problem can turn into an arbitrary code execution issue quite easily.\n\nThe following is an example of a `zip` archive with one benign file and one malicious file. Extracting the malicious file will result in traversing out of the target folder, ending up in `/root/.ssh/` overwriting the `authorized_keys` file:\n\n```\n2018-04-15 22:04:29 .....           19           19  good.txt\n2018-04-15 22:04:42 .....           20           20  ../../../../../../root/.ssh/authorized_keys\n```\n\n## Remediation\nUpgrade `mysql-connector-python` to version 9.3.0 or higher.\n## References\n- [GitHub Commit](https://github.com/mysql/mysql-connector-python/commit/68a6b5157838d1a2eea0b52d5542ac3e7ebaaa8f)\n",
+      "epssDetails": {
+        "percentile": "0.10349",
+        "probability": "0.00037",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-30714"
+        ],
+        "CWE": [
+          "CWE-22"
+        ]
+      },
+      "packageName": "mysql-connector-python",
+      "proprietary": false,
+      "creationTime": "2025-04-16T14:58:26.371215Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-04-15T15:19:36.852000Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2025-04-16T14:58:26.589862Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-04-16T14:58:26.624856Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.1.0",
+        "mysql-connector-python@9.1.0"
+      ],
+      "upgradePath": [
+        false,
+        "mysql-connector-python@9.3.0"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "mysql-connector-python",
+      "version": "9.1.0"
+    },
+    {
+      "id": "SNYK-PYTHON-WERKZEUG-14151620",
+      "title": "Improper Handling of Windows Device Names",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+      "credit": [
+        "Oblivionsage"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,3.1.4)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.1.4"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 6.3,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "werkzeug",
+      "references": [
+        {
+          "url": "https://github.com/pallets/werkzeug/commit/4b833376a45c323a189cd11d2362bcffdb1c0c13",
+          "title": "GitHub Commit"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+          "cvssV3BaseScore": 5.3,
+          "modificationTime": "2025-12-04T01:14:01.152585Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.3,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-11-30T07:28:04.110683Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+          "assigner": "Snyk",
+          "severity": "low",
+          "baseScore": 3.7,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-11-30T07:28:04.110683Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+          "assigner": "NVD",
+          "severity": "medium",
+          "baseScore": 5.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-12-04T01:14:01.152585Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Improper Handling of Windows Device Names via the `safe_join` function. An attacker can cause the application to hang indefinitely by requesting a path ending with a Windows special device name, e.g. `CON` or `NUL`.\r\n\r\n**Note:** This is only vulnerable on Windows, where special device names are implicitly present in every directory.\n## Remediation\nUpgrade `werkzeug` to version 3.1.4 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/werkzeug/commit/4b833376a45c323a189cd11d2362bcffdb1c0c13)\n",
+      "epssDetails": {
+        "percentile": "0.13034",
+        "probability": "0.00044",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-66221"
+        ],
+        "CWE": [
+          "CWE-67"
+        ],
+        "GHSA": [
+          "GHSA-hgf8-39gv-g3f2"
+        ]
+      },
+      "packageName": "werkzeug",
+      "proprietary": false,
+      "creationTime": "2025-11-30T06:54:25.789030Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-11-29T03:39:27Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2025-11-30T07:28:04.101188Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-12-04T01:14:01.152585Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.1.0",
+        "flask@3.0.3",
+        "werkzeug@3.1.2"
+      ],
+      "upgradePath": [
+        false,
+        "flask@3.0.3"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "werkzeug",
+      "version": "3.1.2"
+    },
+    {
+      "id": "SNYK-PYTHON-WERKZEUG-14151620",
+      "title": "Improper Handling of Windows Device Names",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+      "credit": [
+        "Oblivionsage"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,3.1.4)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "3.1.4"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 6.3,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "werkzeug",
+      "references": [
+        {
+          "url": "https://github.com/pallets/werkzeug/commit/4b833376a45c323a189cd11d2362bcffdb1c0c13",
+          "title": "GitHub Commit"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+          "cvssV3BaseScore": 5.3,
+          "modificationTime": "2025-12-04T01:14:01.152585Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.3,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-11-30T07:28:04.110683Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+          "assigner": "Snyk",
+          "severity": "low",
+          "baseScore": 3.7,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-11-30T07:28:04.110683Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+          "assigner": "NVD",
+          "severity": "medium",
+          "baseScore": 5.3,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-12-04T01:14:01.152585Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Improper Handling of Windows Device Names via the `safe_join` function. An attacker can cause the application to hang indefinitely by requesting a path ending with a Windows special device name, e.g. `CON` or `NUL`.\r\n\r\n**Note:** This is only vulnerable on Windows, where special device names are implicitly present in every directory.\n## Remediation\nUpgrade `werkzeug` to version 3.1.4 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/werkzeug/commit/4b833376a45c323a189cd11d2362bcffdb1c0c13)\n",
+      "epssDetails": {
+        "percentile": "0.13034",
+        "probability": "0.00044",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-66221"
+        ],
+        "CWE": [
+          "CWE-67"
+        ],
+        "GHSA": [
+          "GHSA-hgf8-39gv-g3f2"
+        ]
+      },
+      "packageName": "werkzeug",
+      "proprietary": false,
+      "creationTime": "2025-11-30T06:54:25.789030Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-11-29T03:39:27Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2025-11-30T07:28:04.101188Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-12-04T01:14:01.152585Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.1.0",
+        "flask-sqlalchemy@3.1.1",
+        "flask@3.0.3",
+        "werkzeug@3.1.2"
+      ],
+      "upgradePath": [
+        false,
+        "flask-sqlalchemy@3.1.1"
+      ],
+      "isUpgradable": true,
+      "isPatchable": false,
+      "name": "werkzeug",
+      "version": "3.1.2"
+    }
+  ],
+  "ok": false,
+  "dependencyCount": 13,
+  "org": "mahaputrailham98",
+  "policy": "# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.\nversion: v1.25.1\nignore: {}\npatch: {}\n",
+  "isPrivate": true,
+  "licensesPolicy": {
+    "severities": {},
+    "orgLicenseRules": {
+      "AGPL-1.0": {
+        "licenseType": "AGPL-1.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "AGPL-3.0": {
+        "licenseType": "AGPL-3.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "Artistic-1.0": {
+        "licenseType": "Artistic-1.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "Artistic-2.0": {
+        "licenseType": "Artistic-2.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "CDDL-1.0": {
+        "licenseType": "CDDL-1.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "CPOL-1.02": {
+        "licenseType": "CPOL-1.02",
+        "severity": "high",
+        "instructions": ""
+      },
+      "EPL-1.0": {
+        "licenseType": "EPL-1.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "GPL-2.0": {
+        "licenseType": "GPL-2.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "GPL-3.0": {
+        "licenseType": "GPL-3.0",
+        "severity": "high",
+        "instructions": ""
+      },
+      "LGPL-2.0": {
+        "licenseType": "LGPL-2.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "LGPL-2.1": {
+        "licenseType": "LGPL-2.1",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "LGPL-3.0": {
+        "licenseType": "LGPL-3.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "MPL-1.1": {
+        "licenseType": "MPL-1.1",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "MPL-2.0": {
+        "licenseType": "MPL-2.0",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "MS-RL": {
+        "licenseType": "MS-RL",
+        "severity": "medium",
+        "instructions": ""
+      },
+      "SimPL-2.0": {
+        "licenseType": "SimPL-2.0",
+        "severity": "high",
+        "instructions": ""
+      }
+    }
+  },
+  "packageManager": "poetry",
+  "projectId": "20273800-1f13-47f7-85bf-9301cb0241d3",
+  "ignoreSettings": {
+    "adminOnly": false,
+    "reasonRequired": false,
+    "disregardFilesystemIgnores": false
+  },
+  "summary": "9 vulnerable dependency paths",
+  "remediation": {
+    "unresolved": [
+      {
+        "id": "SNYK-PYTHON-JINJA2-8548181",
+        "title": "Template Injection",
+        "CVSSv3": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+        "credit": [
+          "Lydxn"
+        ],
+        "semver": {
+          "vulnerable": [
+            "[,3.1.5)"
+          ]
+        },
+        "exploit": "Not Defined",
+        "fixedIn": [
+          "3.1.5"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "python",
+        "severity": "medium",
+        "cvssScore": 5.4,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "jinja2",
+        "references": [
+          {
+            "url": "https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/pallets/jinja/releases/tag/3.1.5",
+            "title": "GitHub Release"
+          },
+          {
+            "url": "https://jinja.palletsprojects.com/en/stable/changes/%23version-3-1-5",
+            "title": "Jinja Chnanges"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+            "cvssV3BaseScore": 6.3,
+            "modificationTime": "2024-12-31T14:46:25.398031Z"
+          },
+          {
+            "assigner": "SUSE",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "cvssV3BaseScore": 8.1,
+            "modificationTime": "2025-01-04T11:01:11.700479Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 5.4,
+            "cvssVersion": "4.0",
+            "modificationTime": "2024-12-24T09:53:47.782999Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 6.7,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-12-24T09:53:47.782999Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+            "assigner": "Red Hat",
+            "severity": "medium",
+            "baseScore": 6.3,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-12-31T14:46:25.398031Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "assigner": "SUSE",
+            "severity": "high",
+            "baseScore": 8.1,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-01-04T11:01:11.700479Z"
+          }
+        ],
+        "description": "## Overview\n\nAffected versions of this package are vulnerable to Template Injection when an attacker controls the content of a template. This is due to an oversight in the sandboxed environment's method detection when using a stored reference to a malicious string's `format` method, which can then be executed through a filter.\r\n\r\n**Note:** This is only exploitable through custom filters in an application.\n## Remediation\nUpgrade `jinja2` to version 3.1.5 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/jinja/commit/48b0687e05a5466a91cd5812d604fa37ad0943b4)\n- [GitHub Release](https://github.com/pallets/jinja/releases/tag/3.1.5)\n- [Jinja Chnanges](https://jinja.palletsprojects.com/en/stable/changes/#version-3-1-5)\n",
+        "epssDetails": {
+          "percentile": "0.26867",
+          "probability": "0.00094",
+          "modelVersion": "v2025.03.14"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2024-56326"
+          ],
+          "CWE": [
+            "CWE-1336"
+          ],
+          "GHSA": [
+            "GHSA-q2x7-8rv6-6q7h"
+          ]
+        },
+        "packageName": "jinja2",
+        "proprietary": false,
+        "creationTime": "2024-12-24T09:40:26.148979Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2024-12-23T16:40:18Z",
+        "exploitDetails": {
+          "sources": [],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Not Defined",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Not Defined",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "pip",
+        "publicationTime": "2024-12-24T09:53:47.773828Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2025-01-04T11:01:11.700479Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "app@0.1.0",
+          "flask-sqlalchemy@3.1.1",
+          "flask@3.0.3",
+          "jinja2@3.1.4"
+        ],
+        "upgradePath": [
+          false,
+          "flask-sqlalchemy@3.1.1"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": true,
+        "isRuntime": false,
+        "name": "jinja2",
+        "version": "3.1.4",
+        "severityWithCritical": "medium"
+      },
+      {
+        "id": "SNYK-PYTHON-JINJA2-8548987",
+        "title": "Improper Neutralization",
+        "CVSSv3": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "credit": [
+          "Simon Leiner"
+        ],
+        "semver": {
+          "vulnerable": [
+            "[,3.1.5)"
+          ]
+        },
+        "exploit": "Not Defined",
+        "fixedIn": [
+          "3.1.5"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "python",
+        "severity": "medium",
+        "cvssScore": 5.4,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "jinja2",
+        "references": [
+          {
+            "url": "https://github.com/pallets/jinja/commit/767b23617628419ae3709ccfb02f9602ae9fe51f",
+            "title": "GitHub Commit"
+          },
+          {
+            "url": "https://github.com/pallets/jinja/issues/1792",
+            "title": "GitHub Issue"
+          },
+          {
+            "url": "https://github.com/pallets/jinja/pull/1852",
+            "title": "GitHub PR"
+          },
+          {
+            "url": "https://github.com/pallets/jinja/releases/tag/3.1.5",
+            "title": "GitHub Release"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "Red Hat",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+            "cvssV3BaseScore": 7.3,
+            "modificationTime": "2024-12-24T14:17:27.023982Z"
+          },
+          {
+            "assigner": "SUSE",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "cvssV3BaseScore": 8.1,
+            "modificationTime": "2025-01-04T11:01:10.944302Z"
+          },
+          {
+            "assigner": "NVD",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+            "cvssV3BaseScore": 8.8,
+            "modificationTime": "2025-09-23T01:14:01.784017Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 5.4,
+            "cvssVersion": "4.0",
+            "modificationTime": "2025-09-23T08:02:44.358322Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 8.8,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-09-23T08:02:44.358322Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+            "assigner": "Red Hat",
+            "severity": "high",
+            "baseScore": 7.3,
+            "cvssVersion": "3.1",
+            "modificationTime": "2024-12-24T14:17:27.023982Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "assigner": "SUSE",
+            "severity": "high",
+            "baseScore": 8.1,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-01-04T11:01:10.944302Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+            "assigner": "NVD",
+            "severity": "high",
+            "baseScore": 8.8,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-09-23T01:14:01.784017Z"
+          }
+        ],
+        "description": "## Overview\n\nAffected versions of this package are vulnerable to Improper Neutralization when importing a macro in a template whose filename is also a template. This will result in a `SyntaxError: f-string: invalid syntax` error message because the filename is not properly escaped, indicating that it is being treated as a format string.\r\n\r\n**Note:** This is only exploitable when the attacker controls both the content and filename of a template and the application executes untrusted templates.\n## Remediation\nUpgrade `jinja2` to version 3.1.5 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/jinja/commit/767b23617628419ae3709ccfb02f9602ae9fe51f)\n- [GitHub Issue](https://github.com/pallets/jinja/issues/1792)\n- [GitHub PR](https://github.com/pallets/jinja/pull/1852)\n- [GitHub Release](https://github.com/pallets/jinja/releases/tag/3.1.5)\n",
+        "epssDetails": {
+          "percentile": "0.08291",
+          "probability": "0.00031",
+          "modelVersion": "v2025.03.14"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2024-56201"
+          ],
+          "CWE": [
+            "CWE-150"
+          ],
+          "GHSA": [
+            "GHSA-gmj6-6f8f-6699"
+          ]
+        },
+        "packageName": "jinja2",
+        "proprietary": false,
+        "creationTime": "2024-12-24T11:51:17.721758Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2024-12-23T17:54:12Z",
+        "exploitDetails": {
+          "sources": [],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Not Defined",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Not Defined",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "pip",
+        "publicationTime": "2024-12-24T12:02:30.762445Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2025-09-23T08:02:44.358322Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "app@0.1.0",
+          "flask-sqlalchemy@3.1.1",
+          "flask@3.0.3",
+          "jinja2@3.1.4"
+        ],
+        "upgradePath": [
+          false,
+          "flask-sqlalchemy@3.1.1"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": true,
+        "isRuntime": false,
+        "name": "jinja2",
+        "version": "3.1.4",
+        "severityWithCritical": "medium"
+      },
+      {
+        "id": "SNYK-PYTHON-JINJA2-9292516",
+        "title": "Template Injection",
+        "CVSSv3": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "credit": [
+          "securingapps"
+        ],
+        "semver": {
+          "vulnerable": [
+            "[,3.1.6)"
+          ]
+        },
+        "exploit": "Not Defined",
+        "fixedIn": [
+          "3.1.6"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "python",
+        "severity": "medium",
+        "cvssScore": 5.4,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "jinja2",
+        "references": [
+          {
+            "url": "https://github.com/pallets/jinja/commit/90457bbf33b8662926ae65cdde4c4c32e756e403",
+            "title": "GitHub Commit"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "SUSE",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H",
+            "cvssV3BaseScore": 6.5,
+            "modificationTime": "2025-03-20T11:02:43.031580Z"
+          },
+          {
+            "assigner": "Red Hat",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+            "cvssV3BaseScore": 7.3,
+            "modificationTime": "2025-03-07T06:01:18.866548Z"
+          },
+          {
+            "assigner": "NVD",
+            "severity": "high",
+            "cvssV3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+            "cvssV3BaseScore": 8.8,
+            "modificationTime": "2025-09-23T01:14:06.791810Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 5.4,
+            "cvssVersion": "4.0",
+            "modificationTime": "2025-09-23T08:02:28.951339Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+            "assigner": "Snyk",
+            "severity": "high",
+            "baseScore": 8.8,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-09-23T08:02:28.951339Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H",
+            "assigner": "SUSE",
+            "severity": "medium",
+            "baseScore": 6.5,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-03-20T11:02:43.031580Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+            "assigner": "Red Hat",
+            "severity": "high",
+            "baseScore": 7.3,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-03-07T06:01:18.866548Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+            "assigner": "NVD",
+            "severity": "high",
+            "baseScore": 8.8,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-09-23T01:14:06.791810Z"
+          }
+        ],
+        "description": "## Overview\n[Jinja2](https://pypi.org/project/Jinja2/) is a template engine written in pure Python. It provides a Django inspired non-XML syntax but supports inline expressions and an optional sandboxed environment.\n\nAffected versions of this package are vulnerable to Template Injection through the `|attr` filter. An attacker that controls the content of a template can escape the sandbox and execute arbitrary Python code by using the `|attr` filter to get a reference to a string's plain format method, bypassing the environment's attribute lookup.\r\n\r\n**Note:**\r\n\r\nThis is only exploitable if the application executes untrusted templates.\n## Remediation\nUpgrade `Jinja2` to version 3.1.6 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/jinja/commit/90457bbf33b8662926ae65cdde4c4c32e756e403)\n",
+        "epssDetails": {
+          "percentile": "0.29925",
+          "probability": "0.00109",
+          "modelVersion": "v2025.03.14"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2025-27516"
+          ],
+          "CWE": [
+            "CWE-1336"
+          ],
+          "GHSA": [
+            "GHSA-cpwx-vrp4-4pq7"
+          ]
+        },
+        "packageName": "jinja2",
+        "proprietary": false,
+        "creationTime": "2025-03-06T07:35:01.694695Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2025-03-05T20:40:14Z",
+        "exploitDetails": {
+          "sources": [],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Not Defined",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Not Defined",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "pip",
+        "publicationTime": "2025-03-06T07:38:27.746434Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2025-09-23T08:02:28.951339Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 98,
+        "from": [
+          "app@0.1.0",
+          "flask-sqlalchemy@3.1.1",
+          "flask@3.0.3",
+          "jinja2@3.1.4"
+        ],
+        "upgradePath": [
+          false,
+          "flask-sqlalchemy@3.1.1"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": true,
+        "isRuntime": false,
+        "name": "jinja2",
+        "version": "3.1.4",
+        "severityWithCritical": "medium"
+      },
+      {
+        "id": "SNYK-PYTHON-WERKZEUG-14151620",
+        "title": "Improper Handling of Windows Device Names",
+        "CVSSv3": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "credit": [
+          "Oblivionsage"
+        ],
+        "semver": {
+          "vulnerable": [
+            "[,3.1.4)"
+          ]
+        },
+        "exploit": "Not Defined",
+        "fixedIn": [
+          "3.1.4"
+        ],
+        "patches": [],
+        "insights": {
+          "triageAdvice": null
+        },
+        "language": "python",
+        "severity": "medium",
+        "cvssScore": 6.3,
+        "functions": [],
+        "malicious": false,
+        "isDisputed": false,
+        "moduleName": "werkzeug",
+        "references": [
+          {
+            "url": "https://github.com/pallets/werkzeug/commit/4b833376a45c323a189cd11d2362bcffdb1c0c13",
+            "title": "GitHub Commit"
+          }
+        ],
+        "cvssDetails": [
+          {
+            "assigner": "NVD",
+            "severity": "medium",
+            "cvssV3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "cvssV3BaseScore": 5.3,
+            "modificationTime": "2025-12-04T01:14:01.152585Z"
+          }
+        ],
+        "cvssSources": [
+          {
+            "type": "primary",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+            "assigner": "Snyk",
+            "severity": "medium",
+            "baseScore": 6.3,
+            "cvssVersion": "4.0",
+            "modificationTime": "2025-11-30T07:28:04.110683Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "assigner": "Snyk",
+            "severity": "low",
+            "baseScore": 3.7,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-11-30T07:28:04.110683Z"
+          },
+          {
+            "type": "secondary",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "assigner": "NVD",
+            "severity": "medium",
+            "baseScore": 5.3,
+            "cvssVersion": "3.1",
+            "modificationTime": "2025-12-04T01:14:01.152585Z"
+          }
+        ],
+        "description": "## Overview\n\nAffected versions of this package are vulnerable to Improper Handling of Windows Device Names via the `safe_join` function. An attacker can cause the application to hang indefinitely by requesting a path ending with a Windows special device name, e.g. `CON` or `NUL`.\r\n\r\n**Note:** This is only vulnerable on Windows, where special device names are implicitly present in every directory.\n## Remediation\nUpgrade `werkzeug` to version 3.1.4 or higher.\n## References\n- [GitHub Commit](https://github.com/pallets/werkzeug/commit/4b833376a45c323a189cd11d2362bcffdb1c0c13)\n",
+        "epssDetails": {
+          "percentile": "0.13034",
+          "probability": "0.00044",
+          "modelVersion": "v2025.03.14"
+        },
+        "identifiers": {
+          "CVE": [
+            "CVE-2025-66221"
+          ],
+          "CWE": [
+            "CWE-67"
+          ],
+          "GHSA": [
+            "GHSA-hgf8-39gv-g3f2"
+          ]
+        },
+        "packageName": "werkzeug",
+        "proprietary": false,
+        "creationTime": "2025-11-30T06:54:25.789030Z",
+        "functions_new": [],
+        "alternativeIds": [],
+        "disclosureTime": "2025-11-29T03:39:27Z",
+        "exploitDetails": {
+          "sources": [],
+          "maturityLevels": [
+            {
+              "type": "secondary",
+              "level": "Not Defined",
+              "format": "CVSSv3"
+            },
+            {
+              "type": "primary",
+              "level": "Not Defined",
+              "format": "CVSSv4"
+            }
+          ]
+        },
+        "packageManager": "pip",
+        "publicationTime": "2025-11-30T07:28:04.101188Z",
+        "severityBasedOn": "CVSS",
+        "modificationTime": "2025-12-04T01:14:01.152585Z",
+        "socialTrendAlert": false,
+        "packagePopularityRank": 99,
+        "from": [
+          "app@0.1.0",
+          "flask-sqlalchemy@3.1.1",
+          "flask@3.0.3",
+          "werkzeug@3.1.2"
+        ],
+        "upgradePath": [
+          false,
+          "flask-sqlalchemy@3.1.1"
+        ],
+        "isUpgradable": true,
+        "isPatchable": false,
+        "isPinnable": true,
+        "isRuntime": false,
+        "name": "werkzeug",
+        "version": "3.1.2",
+        "severityWithCritical": "medium"
+      }
+    ],
+    "upgrade": {
+      "mysql-connector-python@9.1.0": {
+        "upgradeTo": "mysql-connector-python@9.3.0",
+        "upgrades": [
+          "mysql-connector-python@9.1.0"
+        ],
+        "vulns": [
+          "SNYK-PYTHON-MYSQLCONNECTORPYTHON-9724724"
+        ]
+      }
+    },
+    "patch": {},
+    "ignore": {},
+    "pin": {
+      "jinja2@3.1.4": {
+        "upgradeTo": "jinja2@3.1.6",
+        "vulns": [
+          "SNYK-PYTHON-JINJA2-8548181",
+          "SNYK-PYTHON-JINJA2-8548987",
+          "SNYK-PYTHON-JINJA2-9292516"
+        ],
+        "isTransitive": true
+      },
+      "mysql-connector-python@9.1.0": {
+        "upgradeTo": "mysql-connector-python@9.3.0",
+        "vulns": [
+          "SNYK-PYTHON-MYSQLCONNECTORPYTHON-9724724"
+        ],
+        "isTransitive": false
+      },
+      "werkzeug@3.1.2": {
+        "upgradeTo": "werkzeug@3.1.4",
+        "vulns": [
+          "SNYK-PYTHON-WERKZEUG-14151620"
+        ],
+        "isTransitive": true
+      }
+    }
+  },
+  "filesystemPolicy": false,
+  "filtered": {
+    "ignore": [],
+    "patch": []
+  },
+  "uniqueCount": 5,
+  "targetFile": "pyproject.toml",
+  "projectName": "app",
+  "foundProjectCount": 1,
+  "displayTargetFile": "pyproject.toml",
+  "hasUnknownVersions": false,
+  "path": "/home/moose/dev/pyconid-2025/simple-web-flask/app"
+}

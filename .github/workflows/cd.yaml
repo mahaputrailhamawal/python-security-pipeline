@@ -1,0 +1,52 @@
+name: Deploy Production 🚀
+
+on:
+  release:
+    types:
+      - published
+      - edited
+
+jobs:
+  deploy-production:
+    name: Deploy to production server 🚀
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Execute deployment command
+        uses: appleboy/ssh-action@v0.1.8
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          GIT_URL: ${{ vars.GIT_URL }}
+          APP_PATH_PROD: ${{ vars.APP_PATH_PROD }}
+          APP_TAG: ${{ github.event.release.tag_name }}
+
+        with:
+          host: ${{ secrets.SSH_HOST_PROD }}
+          username: ${{ secrets.SSH_USER_NAME_PROD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
+          envs: APP_PATH_PROD, APP_TAG, GIT_URL,DOCKERHUB_USERNAME, DOCKERHUB_TOKEN
+
+          script: |
+            sudo docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+
+            if [[ -d "/home/ubuntu/${APP_PATH_PROD}" ]]; then 
+              cd /home/ubuntu/$APP_PATH_PROD
+              sudo docker compose down
+              git stash
+              git pull --rebase
+            else
+              ssh-keyscan github.com >> ~/.ssh/known_hosts
+              git clone $GIT_URL /home/ubuntu/$APP_PATH_PROD
+              cd /home/ubuntu/$APP_PATH_PROD
+            fi
+
+            # jika ada update env
+            echo "APP_IMAGE=${DOCKERHUB_USERNAME}/${APP_PATH_PROD}" >> .env
+            echo "APP_TAG=$APP_TAG" >> .env
+
+            # run docker compose
+            sudo docker compose up app-prod db --build --detach
