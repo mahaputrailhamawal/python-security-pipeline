@@ -1,3 +1,0 @@
-# Requirements for DefectDojo upload scripts
-requests>=2.31.0
-safety>=3.0.0

@@ -27,7 +27,7 @@ jobs:
 
       - name: Run Bandit scan
         run: |
-          bandit -r simple-web-flask/app/ -f json -o bandit-results.json
+          bandit -r app/ -f json -o bandit-results.json
           echo "✅ Bandit scan complete"
 
       - name: Upload Bandit Report to DefectDojo
@@ -62,7 +62,7 @@ jobs:
           # Debug: Show current directory and structure
           echo "Current directory: $(pwd)"
           # Run Snyk test on the app directory
-          cd simple-web-flask/app && snyk test --skip-unresolved --json > ../../snyk-results.json || true
+          cd app && snyk test --skip-unresolved --json > ../snyk-results.json || true
           echo "Snyk report created"
 
       - name: Upload Snyk Report to DefectDojo
