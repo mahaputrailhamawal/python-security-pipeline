@@ -1,5 +1,0 @@
-{
-  "ok": false,
-  "error": "Required packages missing: pycairo\n\nPlease run `pip install -r requirements.txt`. If the issue persists try again with --skip-unresolved.",
-  "path": "app/"
-}

@@ -28,7 +28,12 @@
       "Bash(git -C /home/moose/dev/pyconid-2025 ls-tree:*)",
       "Bash(git -C /home/moose/dev/pyconid-2025 rm app/snyk-poetry.json app/snyk-requirements.json)",
       "Bash(git -C /home/moose/dev/pyconid-2025 add -A)",
-      "Bash(git -C /home/moose/dev/pyconid-2025 commit -m \"$(cat <<''EOF''\nfix: Remove old scan files and improve poetry detection\n\n- Delete snyk-poetry.json and snyk-requirements.json (old scan artifacts)\n- Fix verification command to check specific files (poetry.lock, pyproject.toml)\n- Previous command was matching snyk-poetry.json incorrectly\n- This ensures only requirements.txt is scanned\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git -C /home/moose/dev/pyconid-2025 commit -m \"$(cat <<''EOF''\nfix: Remove old scan files and improve poetry detection\n\n- Delete snyk-poetry.json and snyk-requirements.json (old scan artifacts)\n- Fix verification command to check specific files (poetry.lock, pyproject.toml)\n- Previous command was matching snyk-poetry.json incorrectly\n- This ensures only requirements.txt is scanned\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git -C /home/moose/dev/pyconid-2025 log --oneline -5)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 status)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 log origin/main..HEAD --oneline)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 log origin/main --oneline -5)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 log -1 --format=\"%H %s\" origin/main)"
     ],
     "deny": [],
     "ask": []
