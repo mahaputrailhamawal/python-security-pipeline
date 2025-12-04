@@ -1,0 +1,316 @@
+name: Security Scanning - Snyk & Bandit
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+env:
+  PYTHON_VERSION: '3.10'
+
+jobs:
+  security-scan:
+    name: Run Security Scans
+    runs-on: ubuntu-latest
+
+    steps:
+      #########################################
+      # 1. Setup
+      #########################################
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      #########################################
+      # 2. Bandit SAST Scan
+      #########################################
+      - name: Install Bandit
+        run: pip install bandit[toml]
+
+      - name: Run Bandit scan
+        continue-on-error: true
+        run: |
+          echo "🔍 Running Bandit SAST scan..."
+          bandit -r simple-web-flask/app/ \
+            -f json \
+            -o bandit-results.json \
+            --severity-level low
+
+          echo "✅ Bandit scan complete"
+          ls -lh bandit-results.json
+
+      - name: Display Bandit summary
+        if: always()
+        run: |
+          python3 << 'EOF'
+          import json
+          try:
+              with open('bandit-results.json', 'r') as f:
+                  data = json.load(f)
+              results = data.get('results', [])
+              print(f"📊 Bandit found {len(results)} issues")
+
+              severities = {}
+              for r in results:
+                  sev = r.get('issue_severity', 'UNKNOWN')
+                  severities[sev] = severities.get(sev, 0) + 1
+
+              for sev, count in sorted(severities.items()):
+                  print(f"  {sev}: {count}")
+          except Exception as e:
+              print(f"Could not parse results: {e}")
+          EOF
+
+      #########################################
+      # 3. Snyk SCA Scan
+      #########################################
+      - name: Setup Snyk
+        uses: snyk/actions/setup@master
+
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+        continue-on-error: true
+
+      - name: Run Snyk SCA scan
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          echo "🔍 Running Snyk SCA scan..."
+          cd simple-web-flask/app
+
+          snyk test \
+            --json \
+            --skip-unresolved \
+            --severity-threshold=low \
+            > ../../snyk-results.json 2>&1 || true
+
+          cd ../..
+
+          if [ -f snyk-results.json ]; then
+            echo "✅ Snyk scan complete"
+            ls -lh snyk-results.json
+          else
+            echo "⚠️  Snyk scan did not generate output file"
+          fi
+
+      - name: Display Snyk summary
+        if: always()
+        run: |
+          if [ -f snyk-results.json ]; then
+            python3 << 'EOF'
+          import json
+          try:
+              with open('snyk-results.json', 'r') as f:
+                  data = json.load(f)
+
+              vulns = data.get('vulnerabilities', [])
+              print(f"📊 Snyk found {len(vulns)} vulnerabilities")
+
+              severities = {}
+              for v in vulns:
+                  sev = v.get('severity', 'unknown')
+                  severities[sev] = severities.get(sev, 0) + 1
+
+              for sev in ['critical', 'high', 'medium', 'low']:
+                  if sev in severities:
+                      print(f"  {sev.upper()}: {severities[sev]}")
+          except Exception as e:
+              print(f"Could not parse Snyk results: {e}")
+          EOF
+          else
+            echo "No Snyk results file found"
+          fi
+
+      #########################################
+      # 4. Upload to DefectDojo
+      #########################################
+      - name: Upload Bandit results to DefectDojo
+        if: always() && hashFiles('bandit-results.json') != ''
+        env:
+          DD_URL: ${{ secrets.DEFECTDOJO_URL }}
+          DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
+          DD_ENGAGEMENT_BANDIT: ${{ secrets.DEFECTDOJO_ENGAGEMENT_BANDIT }}
+        run: |
+          echo "📤 Uploading Bandit results to DefectDojo..."
+
+          curl -X POST "${DD_URL}/api/v2/import-scan/" \
+            -H "Authorization: Token ${DD_TOKEN}" \
+            -F "file=@bandit-results.json" \
+            -F "scan_type=Bandit Scan" \
+            -F "product_name=Trial-Tests" \
+            -F "engagement_name=Bandit-Scan" \
+            -F "active=true" \
+            -F "minimum_severity=Low" \
+            -F "lead=1" \
+            -F "environment=${{ github.ref_name }}" \
+            -F "build_id=${{ github.run_id }}" \
+            | python3 -c "
+          import json, sys
+          try:
+              data = json.load(sys.stdin)
+              print('✅ Bandit upload successful!')
+              print(f'Test ID: {data.get(\"test\")}')
+          except:
+              print('❌ Bandit upload may have failed')
+          " || echo "Upload completed with errors"
+
+      - name: Upload Snyk results to DefectDojo
+        if: always() && hashFiles('snyk-results.json') != ''
+        env:
+          DD_URL: ${{ secrets.DEFECTDOJO_URL }}
+          DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
+          DD_ENGAGEMENT_SNYK: ${{ secrets.DEFECTDOJO_ENGAGEMENT_SNYK }}
+        run: |
+          echo "📤 Uploading Snyk results to DefectDojo..."
+
+          curl -X POST "${DD_URL}/api/v2/import-scan/" \
+            -H "Authorization: Token ${DD_TOKEN}" \
+            -F "file=@snyk-results.json" \
+            -F "scan_type=Snyk Code Scan" \
+            -F "product_name=Trial-Tests" \
+            -F "engagement_name=Snyk-Scan" \
+            -F "active=true" \
+            -F "minimum_severity=Low" \
+            -F "lead=1" \
+            -F "environment=${{ github.ref_name }}" \
+            -F "build_id=${{ github.run_id }}" \
+            | python3 -c "
+          import json, sys
+          try:
+              data = json.load(sys.stdin)
+              print('✅ Snyk upload successful!')
+              print(f'Test ID: {data.get(\"test\")}')
+          except:
+              print('❌ Snyk upload may have failed')
+          " || echo "Upload completed with errors"
+
+      #########################################
+      # 5. Upload Artifacts
+      #########################################
+      - name: Upload scan results as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-scan-results-${{ github.run_id }}
+          path: |
+            bandit-results.json
+            snyk-results.json
+          retention-days: 90
+
+      #########################################
+      # 6. Generate Summary
+      #########################################
+      - name: Generate job summary
+        if: always()
+        run: |
+          echo "## 🔒 Security Scan Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Bandit summary
+          if [ -f bandit-results.json ]; then
+            echo "### 🔍 Bandit (SAST)" >> $GITHUB_STEP_SUMMARY
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import json
+          with open('bandit-results.json', 'r') as f:
+              data = json.load(f)
+          results = data.get('results', [])
+          severities = {}
+          for r in results:
+              sev = r.get('issue_severity', 'UNKNOWN')
+              severities[sev] = severities.get(sev, 0) + 1
+
+          print(f"- **Total Issues:** {len(results)}")
+          for sev in ['HIGH', 'MEDIUM', 'LOW']:
+              if sev in severities:
+                  print(f"- **{sev}:** {severities[sev]}")
+          EOF
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Snyk summary
+          if [ -f snyk-results.json ]; then
+            echo "### 📦 Snyk (SCA)" >> $GITHUB_STEP_SUMMARY
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import json
+          with open('snyk-results.json', 'r') as f:
+              data = json.load(f)
+          vulns = data.get('vulnerabilities', [])
+          severities = {}
+          for v in vulns:
+              sev = v.get('severity', 'unknown')
+              severities[sev] = severities.get(sev, 0) + 1
+
+          print(f"- **Total Vulnerabilities:** {len(vulns)}")
+          for sev in ['critical', 'high', 'medium', 'low']:
+              if sev in severities:
+                  print(f"- **{sev.upper()}:** {severities[sev]}")
+          EOF
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "### 📤 DefectDojo Upload" >> $GITHUB_STEP_SUMMARY
+          echo "Results uploaded to DefectDojo at: ${{ secrets.DEFECTDOJO_URL }}" >> $GITHUB_STEP_SUMMARY
+
+      #########################################
+      # 7. Fail on critical vulnerabilities (optional)
+      #########################################
+      - name: Check for critical/high vulnerabilities
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "🔍 Checking for critical/high severity issues..."
+
+          # Check Bandit
+          if [ -f bandit-results.json ]; then
+            HIGH_COUNT=$(python3 -c "
+          import json
+          with open('bandit-results.json', 'r') as f:
+              data = json.load(f)
+          high = sum(1 for r in data.get('results', []) if r.get('issue_severity') == 'HIGH')
+          print(high)
+          ")
+            echo "Bandit HIGH issues: $HIGH_COUNT"
+            if [ "$HIGH_COUNT" -gt 0 ]; then
+              echo "⚠️  Found $HIGH_COUNT HIGH severity issues in Bandit scan"
+              # Uncomment to fail the build:
+              # exit 1
+            fi
+          fi
+
+          # Check Snyk
+          if [ -f snyk-results.json ]; then
+            CRITICAL_COUNT=$(python3 -c "
+          import json
+          with open('snyk-results.json', 'r') as f:
+              data = json.load(f)
+          critical = sum(1 for v in data.get('vulnerabilities', []) if v.get('severity') == 'critical')
+          print(critical)
+          ")
+            echo "Snyk CRITICAL issues: $CRITICAL_COUNT"
+            if [ "$CRITICAL_COUNT" -gt 0 ]; then
+              echo "⚠️  Found $CRITICAL_COUNT CRITICAL vulnerabilities in Snyk scan"
+              # Uncomment to fail the build:
+              # exit 1
+            fi
+          fi

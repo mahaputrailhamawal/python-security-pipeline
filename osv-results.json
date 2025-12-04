@@ -1,0 +1,61 @@
+{
+  "results": [
+    {
+      "source": {
+        "path": "/home/moose/dev/pyconid-2025/simple-web-flask/app/poetry.lock",
+        "type": "lockfile"
+      },
+      "package": {
+        "name": "jinja2",
+        "version": "3.1.4",
+        "ecosystem": "PyPI"
+      },
+      "vulnerabilities": [
+        {
+          "id": "SAFETY-76378",
+          "aliases": [
+            "SAFETY-76378"
+          ]
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "/home/moose/dev/pyconid-2025/simple-web-flask/app/poetry.lock",
+        "type": "lockfile"
+      },
+      "package": {
+        "name": "jinja2",
+        "version": "3.1.4",
+        "ecosystem": "PyPI"
+      },
+      "vulnerabilities": [
+        {
+          "id": "SAFETY-75976",
+          "aliases": [
+            "SAFETY-75976"
+          ]
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "/home/moose/dev/pyconid-2025/simple-web-flask/app/poetry.lock",
+        "type": "lockfile"
+      },
+      "package": {
+        "name": "jinja2",
+        "version": "3.1.4",
+        "ecosystem": "PyPI"
+      },
+      "vulnerabilities": [
+        {
+          "id": "SAFETY-74735",
+          "aliases": [
+            "SAFETY-74735"
+          ]
+        }
+      ]
+    }
+  ]
+}

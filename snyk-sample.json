@@ -1,0 +1,642 @@
+{
+  "vulnerabilities": [
+    {
+      "id": "SNYK-PYTHON-ANSIBLECORE-8366738",
+      "title": "Improper Input Validation",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L/E:P",
+      "credit": [
+        "Unknown"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,2.16.9)",
+          "[2.17.0b1,2.17.2)"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "2.16.9",
+        "2.17.2"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "low",
+      "cvssScore": 2,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "ansible-core",
+      "references": [
+        {
+          "url": "https://github.com/ansible/ansible/commit/6c0f4c8a2df78e0863723bffa06f6594b9bdd540%23diff-b36fa2cf8e062dc662300f9e707a65fcdd9d6c3a51927a589643b67d3352e4f0R116",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/ansible/ansible/pull/83509",
+          "title": "GitHub PR"
+        },
+        {
+          "url": "https://github.com/ansible/ansible/pull/84330",
+          "title": "GitHub PR"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2325171",
+          "title": "Red Hat Bugzilla Bug"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L",
+          "cvssV3BaseScore": 5.5,
+          "modificationTime": "2024-11-12T01:11:35.333846Z"
+        },
+        {
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L",
+          "cvssV3BaseScore": 5.5,
+          "modificationTime": "2025-04-29T04:53:20.635814Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:A/VC:L/VI:L/VA:L/SC:L/SI:L/SA:L/E:P",
+          "assigner": "Snyk",
+          "severity": "low",
+          "baseScore": 2,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-02-26T08:07:01.174676Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L/E:P",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-02-26T08:07:01.174676Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L",
+          "assigner": "NVD",
+          "severity": "medium",
+          "baseScore": 5.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-11-12T01:11:35.333846Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L",
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "baseScore": 5.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-04-29T04:53:20.635814Z"
+        }
+      ],
+      "description": "## Overview\n[ansible-core](https://pypi.org/project/ansible-core) is an a radically simple IT automation system. It handles configuration management, application deployment, cloud provisioning, ad-hoc task execution, network automation, and multi-node orchestration. Ansible makes complex changes like zero-downtime rolling updates with load balancers easy.\n\nAffected versions of this package are vulnerable to Improper Input Validation through the use of the `hostvars` object. Attackers can bypass unsafe content protections and execute templated content, leading to arbitrary code execution. This is only exploitable if attackers can modify the content returned to a play that utilizes `hostvars` to reference unsafe content\r\n\r\n## Workaround \r\nRestrict access to inventory files and Ansible playbooks to trusted users to minimize exploitation risks and avoid using the `hostvars` object to reference content marked as `!unsafe`.\n## Remediation\nUpgrade `ansible-core` to version 2.16.9, 2.17.2 or higher.\n## References\n- [GitHub Commit](https://github.com/ansible/ansible/commit/6c0f4c8a2df78e0863723bffa06f6594b9bdd540#diff-b36fa2cf8e062dc662300f9e707a65fcdd9d6c3a51927a589643b67d3352e4f0R116)\n- [GitHub PR](https://github.com/ansible/ansible/pull/83509)\n- [GitHub PR](https://github.com/ansible/ansible/pull/84330)\n- [Red Hat Bugzilla Bug](https://bugzilla.redhat.com/show_bug.cgi?id=2325171)\n",
+      "epssDetails": {
+        "percentile": "0.59549",
+        "probability": "0.00393",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2024-11079"
+        ],
+        "CWE": [
+          "CWE-20"
+        ]
+      },
+      "packageName": "ansible-core",
+      "proprietary": false,
+      "creationTime": "2024-11-12T14:17:20.962477Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2024-11-11T23:45:05Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2024-11-12T17:24:39.233343Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-04-29T04:53:20.635814Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "low",
+      "from": [
+        "app@0.0.0",
+        "ansible-core@2.15.13"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "ansible-core",
+      "version": "2.15.13"
+    },
+    {
+      "id": "SNYK-PYTHON-ANSIBLECORE-8366738",
+      "title": "Improper Input Validation",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L/E:P",
+      "credit": [
+        "Unknown"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,2.16.9)",
+          "[2.17.0b1,2.17.2)"
+        ]
+      },
+      "exploit": "Proof of Concept",
+      "fixedIn": [
+        "2.16.9",
+        "2.17.2"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "low",
+      "cvssScore": 2,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "ansible-core",
+      "references": [
+        {
+          "url": "https://github.com/ansible/ansible/commit/6c0f4c8a2df78e0863723bffa06f6594b9bdd540%23diff-b36fa2cf8e062dc662300f9e707a65fcdd9d6c3a51927a589643b67d3352e4f0R116",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/ansible/ansible/pull/83509",
+          "title": "GitHub PR"
+        },
+        {
+          "url": "https://github.com/ansible/ansible/pull/84330",
+          "title": "GitHub PR"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=2325171",
+          "title": "Red Hat Bugzilla Bug"
+        }
+      ],
+      "cvssDetails": [
+        {
+          "assigner": "NVD",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L",
+          "cvssV3BaseScore": 5.5,
+          "modificationTime": "2024-11-12T01:11:35.333846Z"
+        },
+        {
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "cvssV3Vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L",
+          "cvssV3BaseScore": 5.5,
+          "modificationTime": "2025-04-29T04:53:20.635814Z"
+        }
+      ],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:A/VC:L/VI:L/VA:L/SC:L/SI:L/SA:L/E:P",
+          "assigner": "Snyk",
+          "severity": "low",
+          "baseScore": 2,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-02-26T08:07:01.174676Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L/E:P",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 5.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-02-26T08:07:01.174676Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L",
+          "assigner": "NVD",
+          "severity": "medium",
+          "baseScore": 5.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-11-12T01:11:35.333846Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:L",
+          "assigner": "Red Hat",
+          "severity": "medium",
+          "baseScore": 5.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-04-29T04:53:20.635814Z"
+        }
+      ],
+      "description": "## Overview\n[ansible-core](https://pypi.org/project/ansible-core) is an a radically simple IT automation system. It handles configuration management, application deployment, cloud provisioning, ad-hoc task execution, network automation, and multi-node orchestration. Ansible makes complex changes like zero-downtime rolling updates with load balancers easy.\n\nAffected versions of this package are vulnerable to Improper Input Validation through the use of the `hostvars` object. Attackers can bypass unsafe content protections and execute templated content, leading to arbitrary code execution. This is only exploitable if attackers can modify the content returned to a play that utilizes `hostvars` to reference unsafe content\r\n\r\n## Workaround \r\nRestrict access to inventory files and Ansible playbooks to trusted users to minimize exploitation risks and avoid using the `hostvars` object to reference content marked as `!unsafe`.\n## Remediation\nUpgrade `ansible-core` to version 2.16.9, 2.17.2 or higher.\n## References\n- [GitHub Commit](https://github.com/ansible/ansible/commit/6c0f4c8a2df78e0863723bffa06f6594b9bdd540#diff-b36fa2cf8e062dc662300f9e707a65fcdd9d6c3a51927a589643b67d3352e4f0R116)\n- [GitHub PR](https://github.com/ansible/ansible/pull/83509)\n- [GitHub PR](https://github.com/ansible/ansible/pull/84330)\n- [Red Hat Bugzilla Bug](https://bugzilla.redhat.com/show_bug.cgi?id=2325171)\n",
+      "epssDetails": {
+        "percentile": "0.59549",
+        "probability": "0.00393",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2024-11079"
+        ],
+        "CWE": [
+          "CWE-20"
+        ]
+      },
+      "packageName": "ansible-core",
+      "proprietary": false,
+      "creationTime": "2024-11-12T14:17:20.962477Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2024-11-11T23:45:05Z",
+      "exploitDetails": {
+        "sources": [
+          "Snyk"
+        ],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Proof of Concept",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Proof of Concept",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2024-11-12T17:24:39.233343Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-04-29T04:53:20.635814Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "low",
+      "from": [
+        "app@0.0.0",
+        "ansible@8.7.0",
+        "ansible-core@2.15.13"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "ansible-core",
+      "version": "2.15.13"
+    },
+    {
+      "id": "SNYK-PYTHON-AWSCLI-5750274",
+      "title": "Regular Expression Denial of Service (ReDoS)",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+      "credit": [
+        "kdaily"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[,1.27.90)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "1.27.90"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "low",
+      "cvssScore": 3.7,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "awscli",
+      "references": [
+        {
+          "url": "https://github.com/aws/aws-cli/commit/68ad24c36b4e3f6936e3d1dc76fda39d2d1fe764",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/aws/aws-cli/pull/7742",
+          "title": "GitHub PR"
+        }
+      ],
+      "cvssDetails": [],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+          "assigner": "Snyk",
+          "severity": "low",
+          "baseScore": 3.7,
+          "cvssVersion": "3.1",
+          "modificationTime": "2024-03-06T14:05:21.939410Z"
+        }
+      ],
+      "description": "## Overview\n\nAffected versions of this package are vulnerable to Regular Expression Denial of Service (ReDoS) when an attacker can craft a malicious `nuget.config` file. This vulnerability can be exploited when a user performs Nuget or Dotnet login\n\n## Details\n\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its original and legitimate users. There are many types of DoS attacks, ranging from trying to clog the network pipes to the system by generating a large volume of traffic from many machines (a Distributed Denial of Service - DDoS - attack) to sending crafted requests that cause a system to crash or take a disproportional amount of time to process.\n\nThe Regular expression Denial of Service (ReDoS) is a type of Denial of Service attack. Regular expressions are incredibly powerful, but they aren't very intuitive and can ultimately end up making it easy for attackers to take your site down.\n\nLet\u2019s take the following regular expression as an example:\n```js\nregex = /A(B|C+)+D/\n```\n\nThis regular expression accomplishes the following:\n- `A` The string must start with the letter 'A'\n- `(B|C+)+` The string must then follow the letter A with either the letter 'B' or some number of occurrences of the letter 'C' (the `+` matches one or more times). The `+` at the end of this section states that we can look for one or more matches of this section.\n- `D` Finally, we ensure this section of the string ends with a 'D'\n\nThe expression would match inputs such as `ABBD`, `ABCCCCD`, `ABCBCCCD` and `ACCCCCD`\n\nIt most cases, it doesn't take very long for a regex engine to find a match:\n\n```bash\n$ time node -e '/A(B|C+)+D/.test(\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCD\")'\n0.04s user 0.01s system 95% cpu 0.052 total\n\n$ time node -e '/A(B|C+)+D/.test(\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCX\")'\n1.79s user 0.02s system 99% cpu 1.812 total\n```\n\nThe entire process of testing it against a 30 characters long string takes around ~52ms. But when given an invalid string, it takes nearly two seconds to complete the test, over ten times as long as it took to test a valid string. The dramatic difference is due to the way regular expressions get evaluated.\n\nMost Regex engines will work very similarly (with minor differences). The engine will match the first possible way to accept the current character and proceed to the next one. If it then fails to match the next one, it will backtrack and see if there was another way to digest the previous character. If it goes too far down the rabbit hole only to find out the string doesn\u2019t match in the end, and if many characters have multiple valid regex paths, the number of backtracking steps can become very large, resulting in what is known as _catastrophic backtracking_.\n\nLet's look at how our expression runs into this problem, using a shorter string: \"ACCCX\". While it seems fairly straightforward, there are still four different ways that the engine could match those three C's:\n1. CCC\n2. CC+C\n3. C+CC\n4. C+C+C.\n\nThe engine has to try each of those combinations to see if any of them potentially match against the expression. When you combine that with the other steps the engine must take, we can use [RegEx 101 debugger](https://regex101.com/debugger) to see the engine has to take a total of 38 steps before it can determine the string doesn't match.\n\nFrom there, the number of steps the engine must use to validate a string just continues to grow.\n\n| String | Number of C's | Number of steps |\n| -------|-------------:| -----:|\n| ACCCX | 3 | 38\n| ACCCCX | 4 | 71\n| ACCCCCX | 5 | 136\n| ACCCCCCCCCCCCCCX | 14 | 65,553\n\n\nBy the time the string includes 14 C's, the engine has to take over 65,000 steps just to see if the string is valid. These extreme situations can cause them to work very slowly (exponentially related to input size, as shown above), allowing an attacker to exploit this and can cause the service to excessively consume CPU, resulting in a Denial of Service.\n\n## Remediation\nUpgrade `awscli` to version 1.27.90 or higher.\n## References\n- [GitHub Commit](https://github.com/aws/aws-cli/commit/68ad24c36b4e3f6936e3d1dc76fda39d2d1fe764)\n- [GitHub PR](https://github.com/aws/aws-cli/pull/7742)\n",
+      "epssDetails": null,
+      "identifiers": {
+        "CVE": [],
+        "CWE": [
+          "CWE-1333"
+        ],
+        "PVE": [
+          "PVE-2023-58911"
+        ]
+      },
+      "packageName": "awscli",
+      "proprietary": false,
+      "creationTime": "2023-07-02T08:04:33.795221Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2023-07-02T08:00:54Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2023-07-02T08:04:34.018686Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2024-03-06T14:05:21.939410Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "low",
+      "from": [
+        "app@0.0.0",
+        "awscli@1.22.34"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "awscli",
+      "version": "1.22.34"
+    },
+    {
+      "id": "SNYK-PYTHON-AWSSAMCLI-9576384",
+      "title": "Directory Traversal",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+      "credit": [
+        "Kevin Backhouse"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[1.9.0,1.134.0)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "1.134.0"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 6.9,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "aws-sam-cli",
+      "references": [
+        {
+          "url": "https://aws.amazon.com/security/security-bulletins/AWS-2025-008",
+          "title": "AWS security-bulletins"
+        },
+        {
+          "url": "https://github.com/aws/aws-sam-cli/commit/462b4e07b873035c25e8abc9068bb3b76e06314c",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/aws/aws-sam-cli/pull/7890",
+          "title": "GitHub PR"
+        }
+      ],
+      "cvssDetails": [],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.9,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-04-01T13:03:37.413471Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-04-01T13:03:37.413471Z"
+        }
+      ],
+      "description": "## Overview\n[aws-sam-cli](https://pypi.org/project/aws-sam-cli) is an AWS SAM CLI is a CLI tool for local development and testing of Serverless applications\n\nAffected versions of this package are vulnerable to Directory Traversal through the symlink handling process. After completing a build, the content of those symlinks is copied to the cache of the local workspace as regular files or directories, allowing an attacker who does not have access to those symlinks outside of the Docker container to get access via the local workspace.\r\n\r\n**Note:** After upgrading, users must re-build their applications using `sam build --use-container` to update the symlinks.\n\n## Details\n\nA Directory Traversal attack (also known as path traversal) aims to access files and directories that are stored outside the intended folder. By manipulating files with \"dot-dot-slash (../)\" sequences and its variations, or by using absolute file paths, it may be possible to access arbitrary files and directories stored on file system, including application source code, configuration, and other critical system files.\n\nDirectory Traversal vulnerabilities can be generally divided into two types:\n\n- **Information Disclosure**: Allows the attacker to gain information about the folder structure or read the contents of sensitive files on the system.\n\n`st` is a module for serving static files on web pages, and contains a [vulnerability of this type](https://snyk.io/vuln/npm:st:20140206). In our example, we will serve files from the `public` route.\n\nIf an attacker requests the following URL from our server, it will in turn leak the sensitive private key of the root user.\n\n```\ncurl http://localhost:8080/public/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/id_rsa\n```\n**Note** `%2e` is the URL encoded version of `.` (dot).\n\n- **Writing arbitrary files**: Allows the attacker to create or replace existing files. This type of vulnerability is also known as `Zip-Slip`. \n\nOne way to achieve this is by using a malicious `zip` archive that holds path traversal filenames. When each filename in the zip archive gets concatenated to the target extraction folder, without validation, the final path ends up outside of the target folder. If an executable or a configuration file is overwritten with a file containing malicious code, the problem can turn into an arbitrary code execution issue quite easily.\n\nThe following is an example of a `zip` archive with one benign file and one malicious file. Extracting the malicious file will result in traversing out of the target folder, ending up in `/root/.ssh/` overwriting the `authorized_keys` file:\n\n```\n2018-04-15 22:04:29 .....           19           19  good.txt\n2018-04-15 22:04:42 .....           20           20  ../../../../../../root/.ssh/authorized_keys\n```\n\n## Remediation\nUpgrade `aws-sam-cli` to version 1.134.0 or higher.\n## References\n- [AWS security-bulletins](https://aws.amazon.com/security/security-bulletins/AWS-2025-008)\n- [GitHub Commit](https://github.com/aws/aws-sam-cli/commit/462b4e07b873035c25e8abc9068bb3b76e06314c)\n- [GitHub PR](https://github.com/aws/aws-sam-cli/pull/7890)\n",
+      "epssDetails": {
+        "percentile": "0.01420",
+        "probability": "0.00013",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-3048"
+        ],
+        "CWE": [
+          "CWE-22"
+        ],
+        "GHSA": [
+          "GHSA-pp64-wj43-xqcr"
+        ]
+      },
+      "packageName": "aws-sam-cli",
+      "proprietary": false,
+      "creationTime": "2025-04-01T12:58:29.879199Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-03-31T22:36:52Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2025-04-01T13:03:37.404088Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-04-01T13:03:37.413471Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.0.0",
+        "aws-sam-cli@1.126.0"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "aws-sam-cli",
+      "version": "1.126.0"
+    },
+    {
+      "id": "SNYK-PYTHON-AWSSAMCLI-9576386",
+      "title": "Directory Traversal",
+      "CVSSv3": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+      "credit": [
+        "Kevin Backhouse"
+      ],
+      "semver": {
+        "vulnerable": [
+          "[1.98.0,1.133.0)"
+        ]
+      },
+      "exploit": "Not Defined",
+      "fixedIn": [
+        "1.133.0"
+      ],
+      "patches": [],
+      "insights": {
+        "triageAdvice": null
+      },
+      "language": "python",
+      "severity": "medium",
+      "cvssScore": 6.9,
+      "functions": [],
+      "malicious": false,
+      "isDisputed": false,
+      "moduleName": "aws-sam-cli",
+      "references": [
+        {
+          "url": "https://aws.amazon.com/security/security-bulletins/AWS-2025-008",
+          "title": "AWS security-bulletins"
+        },
+        {
+          "url": "https://github.com/aws/aws-sam-cli/commit/a643c2c3fa9937733f32af0bd8583c10141d9742",
+          "title": "GitHub Commit"
+        },
+        {
+          "url": "https://github.com/aws/aws-sam-cli/pull/7865",
+          "title": "GitHub PR"
+        }
+      ],
+      "cvssDetails": [],
+      "cvssSources": [
+        {
+          "type": "primary",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.9,
+          "cvssVersion": "4.0",
+          "modificationTime": "2025-04-01T13:26:38.629517Z"
+        },
+        {
+          "type": "secondary",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+          "assigner": "Snyk",
+          "severity": "medium",
+          "baseScore": 6.5,
+          "cvssVersion": "3.1",
+          "modificationTime": "2025-04-01T13:26:38.629517Z"
+        }
+      ],
+      "description": "## Overview\n[aws-sam-cli](https://pypi.org/project/aws-sam-cli) is an AWS SAM CLI is a CLI tool for local development and testing of Serverless applications\n\nAffected versions of this package are vulnerable to Directory Traversal due to the handling of symlinks during the build process. An attacker can access and copy restricted files to a more permissive location within the container by leveraging symlinks to bypass security restrictions.\n\n**Note:** The issue only affects local workspaces using AWS SAM CLI with container builds (--use-container).\n\nAfter upgrading to the fixed version and allowing symlinks to resolve on the host machine, users should use the explicit `--mount-symlinks` parameter. This is to retain the previous behavior.\n\n## Details\n\nA Directory Traversal attack (also known as path traversal) aims to access files and directories that are stored outside the intended folder. By manipulating files with \"dot-dot-slash (../)\" sequences and its variations, or by using absolute file paths, it may be possible to access arbitrary files and directories stored on file system, including application source code, configuration, and other critical system files.\n\nDirectory Traversal vulnerabilities can be generally divided into two types:\n\n- **Information Disclosure**: Allows the attacker to gain information about the folder structure or read the contents of sensitive files on the system.\n\n`st` is a module for serving static files on web pages, and contains a [vulnerability of this type](https://snyk.io/vuln/npm:st:20140206). In our example, we will serve files from the `public` route.\n\nIf an attacker requests the following URL from our server, it will in turn leak the sensitive private key of the root user.\n\n```\ncurl http://localhost:8080/public/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/id_rsa\n```\n**Note** `%2e` is the URL encoded version of `.` (dot).\n\n- **Writing arbitrary files**: Allows the attacker to create or replace existing files. This type of vulnerability is also known as `Zip-Slip`. \n\nOne way to achieve this is by using a malicious `zip` archive that holds path traversal filenames. When each filename in the zip archive gets concatenated to the target extraction folder, without validation, the final path ends up outside of the target folder. If an executable or a configuration file is overwritten with a file containing malicious code, the problem can turn into an arbitrary code execution issue quite easily.\n\nThe following is an example of a `zip` archive with one benign file and one malicious file. Extracting the malicious file will result in traversing out of the target folder, ending up in `/root/.ssh/` overwriting the `authorized_keys` file:\n\n```\n2018-04-15 22:04:29 .....           19           19  good.txt\n2018-04-15 22:04:42 .....           20           20  ../../../../../../root/.ssh/authorized_keys\n```\n\n## Remediation\nUpgrade `aws-sam-cli` to version 1.133.0 or higher.\n## References\n- [AWS security-bulletins](https://aws.amazon.com/security/security-bulletins/AWS-2025-008)\n- [GitHub Commit](https://github.com/aws/aws-sam-cli/commit/a643c2c3fa9937733f32af0bd8583c10141d9742)\n- [GitHub PR](https://github.com/aws/aws-sam-cli/pull/7865)\n",
+      "epssDetails": {
+        "percentile": "0.02700",
+        "probability": "0.00016",
+        "modelVersion": "v2025.03.14"
+      },
+      "identifiers": {
+        "CVE": [
+          "CVE-2025-3047"
+        ],
+        "CWE": [
+          "CWE-22"
+        ],
+        "GHSA": [
+          "GHSA-px37-jpqx-97q9"
+        ]
+      },
+      "packageName": "aws-sam-cli",
+      "proprietary": false,
+      "creationTime": "2025-04-01T13:26:38.387640Z",
+      "functions_new": [],
+      "alternativeIds": [],
+      "disclosureTime": "2025-03-31T22:36:49Z",
+      "exploitDetails": {
+        "sources": [],
+        "maturityLevels": [
+          {
+            "type": "secondary",
+            "level": "Not Defined",
+            "format": "CVSSv3"
+          },
+          {
+            "type": "primary",
+            "level": "Not Defined",
+            "format": "CVSSv4"
+          }
+        ]
+      },
+      "packageManager": "pip",
+      "publicationTime": "2025-04-01T13:26:38.583371Z",
+      "severityBasedOn": "CVSS",
+      "modificationTime": "2025-04-01T13:26:38.629517Z",
+      "socialTrendAlert": false,
+      "severityWithCritical": "medium",
+      "from": [
+        "app@0.0.0",
+        "aws-sam-cli@1.126.0"
+      ],
+      "upgradePath": [],
+      "isUpgradable": false,
+      "isPatchable": false,
+      "name": "aws-sam-cli",
+      "version": "1.126.0"
+    }
+  ]
+}

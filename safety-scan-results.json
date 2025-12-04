@@ -1,0 +1,509 @@
+{
+  "meta": {
+    "scan_type": "scan",
+    "stage": "development",
+    "scan_locations": [
+      "/home/moose/dev/pyconid-2025/simple-web-flask"
+    ],
+    "authenticated": true,
+    "authentication_method": "token",
+    "timestamp": "2025-11-19T14:04:51.162187",
+    "telemetry": {
+      "os_type": "Linux",
+      "os_release": "6.6.87.2-microsoft-standard-WSL2",
+      "os_description": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+      "python_version": "3.10.12",
+      "safety_command": "scan",
+      "safety_options": {
+        "output": {
+          "--output": 1
+        }
+      },
+      "safety_version": "3.7.0",
+      "safety_source": "cli"
+    },
+    "schema_version": "3.0"
+  },
+  "scan_results": {
+    "files": [],
+    "projects": [
+      {
+        "id": "simple-web-flask",
+        "upload_request_id": null,
+        "location": "/home/moose/dev/pyconid-2025/simple-web-flask",
+        "policy": {
+          "id": "2b8f9f8c-6ed1-466f-8349-dbddd8b8bf95",
+          "path": null,
+          "source": "cloud"
+        },
+        "git": {
+          "branch": "main",
+          "tag": "",
+          "commit": "3a9d2902453914e11b69cd345fb5807edc279db5",
+          "dirty": false,
+          "origin": "https://github.com/mahaputrailhamawal/simple-web-flask"
+        },
+        "files": [
+          {
+            "location": "/home/moose/dev/pyconid-2025/simple-web-flask/app/requirements.txt",
+            "type": "requirements.txt",
+            "categories": [
+              "python"
+            ],
+            "results": {
+              "dependencies": [
+                {
+                  "name": "flask",
+                  "specifications": [
+                    {
+                      "raw": "Flask",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [
+                          {
+                            "id": "25820",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<0.6.1"
+                          },
+                          {
+                            "id": "77323",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": ">=3.1.0,<3.1.1"
+                          },
+                          {
+                            "id": "36388",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<0.12.3"
+                          },
+                          {
+                            "id": "38654",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<0.12.3"
+                          },
+                          {
+                            "id": "55261",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": ">=2.3.0,<2.3.2"
+                          }
+                        ],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "mysql-connector-python",
+                  "specifications": [
+                    {
+                      "raw": "mysql-connector-python",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [
+                          {
+                            "id": "62741",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<=8.0"
+                          },
+                          {
+                            "id": "78798",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<9.1.0"
+                          },
+                          {
+                            "id": "75114",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<9.1.0"
+                          },
+                          {
+                            "id": "36816",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<=8.0.13"
+                          },
+                          {
+                            "id": "62677",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": ">=8.0.0,<=8.0.26"
+                          },
+                          {
+                            "id": "70625",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<=8.3.0"
+                          },
+                          {
+                            "id": "73722",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<8.0.11"
+                          },
+                          {
+                            "id": "62676",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<=8.0.28"
+                          },
+                          {
+                            "id": "62675",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<=8.0.28"
+                          },
+                          {
+                            "id": "25901",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<2.0.4"
+                          },
+                          {
+                            "id": "65846",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<2.1.6"
+                          },
+                          {
+                            "id": "62681",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<=8.0.23"
+                          }
+                        ],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "flask-sqlalchemy",
+                  "specifications": [
+                    {
+                      "raw": "Flask-SQLAlchemy",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "sqlalchemy",
+                  "specifications": [
+                    {
+                      "raw": "SQLAlchemy",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [
+                          {
+                            "id": "38497",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": ">=1.3.0b1,<=1.3.0b2"
+                          },
+                          {
+                            "id": "51668",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<2.0.0b1"
+                          },
+                          {
+                            "id": "71592",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<1.3.0"
+                          },
+                          {
+                            "id": "52946",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<0.7.0"
+                          },
+                          {
+                            "id": "60424",
+                            "ignored": {
+                              "code": "unpinned-specification",
+                              "reason": "This vulnerability is being ignored due to the 'ignore-unpinned-requirements' flag (default True). To change this, set 'ignore-unpinned-requirements' to False under 'security' in your policy file. See https://docs.pyup.io/docs/safety-20-policy-file for more information.",
+                              "expires": null
+                            },
+                            "vulnerable_spec": "<1.1.14"
+                          }
+                        ],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "location": "/home/moose/dev/pyconid-2025/simple-web-flask/app/poetry.lock",
+            "type": "poetry.lock",
+            "categories": [
+              "python"
+            ],
+            "results": {
+              "dependencies": [
+                {
+                  "name": "blinker",
+                  "specifications": [
+                    {
+                      "raw": "blinker (==1.8.2) ; python_version >= \"3.8\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "click",
+                  "specifications": [
+                    {
+                      "raw": "click (==8.1.7) ; python_version >= \"3.7\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "colorama",
+                  "specifications": [
+                    {
+                      "raw": "colorama (==0.4.6) ; python_version >= \"2.7\" and python_version < \"3.0.dev0\" or python_version >= \"3.7.dev0\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "flask",
+                  "specifications": [
+                    {
+                      "raw": "flask (==3.0.3) ; python_version >= \"3.8\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "flask-sqlalchemy",
+                  "specifications": [
+                    {
+                      "raw": "flask-sqlalchemy (==3.1.1) ; python_version >= \"3.8\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "greenlet",
+                  "specifications": [
+                    {
+                      "raw": "greenlet (==3.1.1) ; python_version >= \"3.7\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "itsdangerous",
+                  "specifications": [
+                    {
+                      "raw": "itsdangerous (==2.2.0) ; python_version >= \"3.8\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "jinja2",
+                  "specifications": [
+                    {
+                      "raw": "jinja2 (==3.1.4) ; python_version >= \"3.7\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [
+                          {
+                            "id": "76378",
+                            "ignored": null,
+                            "vulnerable_spec": "<3.1.5"
+                          },
+                          {
+                            "id": "75976",
+                            "ignored": null,
+                            "vulnerable_spec": "<3.1.6"
+                          },
+                          {
+                            "id": "74735",
+                            "ignored": null,
+                            "vulnerable_spec": ">=3.0.0a1,<3.1.5"
+                          }
+                        ],
+                        "remediation": {
+                          "vulnerabilities_found": 3,
+                          "closest_secure": null,
+                          "recommended": "3.1.6",
+                          "other_recommended": []
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "markupsafe",
+                  "specifications": [
+                    {
+                      "raw": "markupsafe (==3.0.2) ; python_version >= \"3.9\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "mysql-connector-python",
+                  "specifications": [
+                    {
+                      "raw": "mysql-connector-python (==9.1.0) ; python_version >= \"3.9\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "sqlalchemy",
+                  "specifications": [
+                    {
+                      "raw": "sqlalchemy (==2.0.36) ; python_version >= \"3.7\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "typing-extensions",
+                  "specifications": [
+                    {
+                      "raw": "typing-extensions (==4.12.2) ; python_version >= \"3.8\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "werkzeug",
+                  "specifications": [
+                    {
+                      "raw": "werkzeug (==3.1.2) ; python_version >= \"3.9\"",
+                      "vulnerabilities": {
+                        "known_vulnerabilities": [],
+                        "remediation": null
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "location": "/home/moose/dev/pyconid-2025/simple-web-flask/app/pyproject.toml",
+            "type": "pyproject.toml",
+            "categories": [
+              "python"
+            ],
+            "results": {
+              "dependencies": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

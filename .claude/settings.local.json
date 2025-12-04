@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(snyk monitor:*)",
+      "Bash(python3:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(bandit:*)",
+      "Bash(cat:*)",
+      "Bash(chmod:*)",
+      "Bash(snyk test:*)",
+      "Bash(tee:*)",
+      "Bash(./run-snyk-sca.sh:*)",
+      "Bash(bash:*)",
+      "Bash(./query-engagements-quick.sh:*)",
+      "Bash(./test-bandit-upload.sh)",
+      "Bash(git rev-parse:*)",
+      "Bash(git -C /home/moose/dev/pyconid-2025/simple-web-flask status)",
+      "Bash(git -C /home/moose/dev/pyconid-2025/simple-web-flask add .github/workflows/bandit-defectdojo.yml)",
+      "Bash(git -C /home/moose/dev/pyconid-2025/simple-web-flask add WORKFLOW_PATH_FIX.md)",
+      "Bash(git -C /home/moose/dev/pyconid-2025/simple-web-flask commit -m \"$(cat <<''EOF''\nAdd security scanning workflow for Bandit and Snyk\n\n- Add Bandit SAST scan for Python security issues\n- Add Snyk SCA scan for dependency vulnerabilities  \n- Auto-upload results to DefectDojo (Bandit-Scan and Snyk-Scan engagements)\n- Run on push, PR, and weekly schedule\n- Fixed paths to use app/ instead of simple-web-flask/app/\n- Upload scan artifacts with 30-day retention\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(/home/moose/dev/pyconid-2025/query-engagements-quick.sh:*)",
+      "Bash(git -C /home/moose/dev/pyconid-2025/simple-web-flask log --oneline -1 .github/workflows/bandit-defectdojo.yml)",
+      "Bash(git -C /home/moose/dev/pyconid-2025/simple-web-flask status .github/workflows/bandit-defectdojo.yml)",
+      "Bash(git remote:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

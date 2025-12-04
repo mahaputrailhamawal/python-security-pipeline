@@ -1,0 +1,43 @@
+stages:
+  - security
+  - upload
+
+variables:
+  DD_URL: "http://16.78.42.164:8080"
+  ENGAGEMENT_ID: "1"
+
+bandit-scan:
+  stage: security
+  image: python:3.10
+  before_script:
+    - pip install bandit
+  script:
+    - echo "Running Bandit security scan..."
+    - bandit -r simple-web-flask/app/ -f json -o bandit-results.json
+    - echo "Scan complete"
+  artifacts:
+    paths:
+      - bandit-results.json
+    expire_in: 30 days
+  allow_failure: true
+
+upload-to-defectdojo:
+  stage: upload
+  image: curlimages/curl:latest
+  dependencies:
+    - bandit-scan
+  script:
+    - |
+      curl -X POST "${DD_URL}/api/v2/import-scan/" \
+        -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
+        -F "file=@bandit-results.json" \
+        -F "scan_type=Bandit Scan" \
+        -F "engagement=${ENGAGEMENT_ID}" \
+        -F "verified=false" \
+        -F "active=true" \
+        -F "scan_date=$(date +%Y-%m-%d)" \
+        -F "lead=1" \
+        -F "environment=${CI_ENVIRONMENT_NAME:-Development}"
+  only:
+    - main
+    - develop

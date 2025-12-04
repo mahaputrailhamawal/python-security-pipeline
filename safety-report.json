@@ -1,0 +1,28 @@
+Safety 3.7.0 scanning /home/moose/dev/pyconid-2025
+2025-11-19 04:37:08 UTC
+
+Account: Mahaputra Ilham Awal, mahaputrailham98@gmail.com 
+Project: pyconid-2025
+ Environment: development
+ Scan policy: fetched from Safety Platform, ignoring any local Safety CLI policy files
+
+Python detected. Found 1 Python requirement file, 1 Python poetry lock file and 1 Python 
+pyproject.toml file
+
+✅ simple-web-flask/app/requirements.txt: No issues found.
+
+Dependency vulnerabilities detected:
+
+📝 simple-web-flask/app/poetry.lock:
+
+ jinja2 (==3.1.4) ; python_version >= "3.7" [3 vulnerabilities found]                            
+ Update jinja2 (==3.1.4) ; python_version >= "3.7" to jinja2==3.1.6 to fix 3 vulnerabilities     
+ Learn more: https://data.safetycli.com/p/pypi/jinja2/eda/?from=3.1.4&to=3.1.6                   
+
+✅ simple-web-flask/app/pyproject.toml: No issues found.
+
+Tested 17 dependencies for security issues using policy fetched from Safety Platform
+25 vulnerabilities found, 22 ignored due to policy.
+1 fix suggested, resolving 3 vulnerabilities.
+
+Project dashboard: https://platform.safetycli.com/codebases/pyconid-2025/findings

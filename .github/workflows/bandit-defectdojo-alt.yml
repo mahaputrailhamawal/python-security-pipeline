@@ -1,0 +1,85 @@
+name: Bandit Security Scan (Alternative)
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 9 * * 1'
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Bandit
+        run: pip install bandit
+
+      - name: Run Bandit scan
+        run: |
+          bandit -r simple-web-flask/app/ -f json -o bandit-results.json
+          echo "✅ Bandit scan complete"
+
+      - name: Upload to DefectDojo using Python script
+        env:
+          DD_URL: ${{ secrets.DEFECTDOJO_URL }}
+          DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
+          ENGAGEMENT_ID: ${{ secrets.DEFECTDOJO_ENGAGEMENT_ID }}
+        run: |
+          # Create upload script inline
+          cat > upload.py << 'EOF'
+          import requests
+          import sys
+          import os
+
+          DD_URL = os.environ['DD_URL']
+          DD_TOKEN = os.environ['DD_TOKEN']
+          ENGAGEMENT_ID = os.environ['ENGAGEMENT_ID']
+
+          print("Uploading to DefectDojo...")
+
+          response = requests.post(
+              f"{DD_URL}/api/v2/import-scan/",
+              headers={"Authorization": f"Token {DD_TOKEN}"},
+              files={"file": open("bandit-results.json", "rb")},
+              data={
+                  "scan_type": "Bandit Scan",
+                  "engagement": ENGAGEMENT_ID,
+                  "verified": "false",
+                  "active": "false",
+                  "minimum_severity": "Low",
+                  "lead": "1",
+                  "environment": "Production"
+              }
+          )
+
+          print(f"Status Code: {response.status_code}")
+          print(f"Response: {response.text}")
+
+          if response.status_code in [200, 201]:
+              print("✅ Successfully uploaded to DefectDojo")
+              sys.exit(0)
+          else:
+              print(f"❌ Upload failed with status {response.status_code}")
+              sys.exit(1)
+          EOF
+
+          pip install requests
+          python upload.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bandit-results
+          path: bandit-results.json
+          retention-days: 30
