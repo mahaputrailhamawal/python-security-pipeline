@@ -34,14 +34,15 @@ jobs:
         env:
           DD_URL: ${{ secrets.DEFECTDOJO_URL }}
           DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
-          ENGAGEMENT_ID: ${{ secrets.DEFECTDOJO_ENGAGEMENT_ID }}
+          PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
+          ENGAGEMENT_BANDIT: ${{ secrets.ENGAGEMENT_BANDIT }}
         run: |
           curl -X POST "${DD_URL}/api/v2/import-scan/" \
             -H "Authorization: Token ${DD_TOKEN}" \
             -F "file=@bandit-results.json" \
             -F "scan_type=Bandit Scan" \
-            -F "product_name=Trial-Tests" \
-            -F "engagement_name=Bandit-Scan" \
+            -F "product_name=${PRODUCT_NAME}" \
+            -F "engagement_name=${ENGAGEMENT_BANDIT}" \
             -F "active=true" \
             -F "minimum_severity=Low" \
             -F "lead=1" \
@@ -69,7 +70,8 @@ jobs:
         env:
           DD_URL: ${{ secrets.DEFECTDOJO_URL }}
           DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
-          ENGAGEMENT_ID: ${{ secrets.DEFECTDOJO_ENGAGEMENT_ID }}
+          PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
+          ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
         run: |
           echo "Current directory: $(pwd)"
           ls -la 
@@ -77,8 +79,8 @@ jobs:
             -H "Authorization: Token ${DD_TOKEN}" \
             -F "file=@snyk-results.json" \
             -F "scan_type=Snyk Scan" \
-            -F "product_name=Trial-Tests" \
-            -F "engagement_name=Snyk-Scan" \
+            -F "product_name=${PRODUCT_NAME}" \
+            -F "engagement_name=${ENGAGEMENT_SNYK}" \
             -F "active=true" \
             -F "minimum_severity=Low" \
             -F "lead=1" \
