@@ -70,18 +70,7 @@ jobs:
           echo "Current directory: $(pwd)"
           echo "App directory contents:"
           ls -la app/
-          echo "Checking requirements.txt:"
-          head -20 app/requirements.txt
-          echo "Snyk version:"
-          snyk --version
-          echo "Snyk auth status:"
-          snyk auth
-          # Run Snyk test from inside the app directory with verbose output
-          cd app/
-          echo "Running Snyk test..."
-          snyk test --skip-unresolved --json > ../snyk-results.json 2>&1 || true
-          echo "Also running without --skip-unresolved for comparison:"
-          snyk test --json > ../snyk-results-full.json 2>&1 || true
+          snyk test app/ --skip-unresolved --json > snyk-results.json
           echo "Snyk report created"
 
       - name: Upload Snyk Report to DefectDojo
@@ -92,13 +81,8 @@ jobs:
           ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
         run: |
           echo "Checking if snyk-results.json was created:"
-          ls -la snyk-results*.json || echo "Files not created"
-          echo "Snyk results file content (--skip-unresolved):"
-          cat snyk-results.json || echo "Cannot read file"
-          echo "Snyk results file content (full scan):"
-          cat snyk-results-full.json || echo "Cannot read file"
-          echo "File sizes:"
-          wc -c snyk-results*.json || echo "Cannot check size"
+          ls -la snyk-results.json || echo "Files not created"
+          
           curl -X POST "${DD_URL}/api/v2/import-scan/" \
             -H "Authorization: Token ${DD_TOKEN}" \
             -F "file=@snyk-results.json" \
