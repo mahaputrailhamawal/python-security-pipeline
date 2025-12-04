@@ -61,7 +61,11 @@ jobs:
         run: |
           echo "🔐 Authenticating with Snyk..."
           snyk auth ${{ secrets.SNYK_TOKEN }}
+          echo "Checking Snyk configuration:"
           snyk config get api
+          snyk config get org || echo "No org configured"
+          echo "Getting account info:"
+          snyk whoami 2>&1 || echo "whoami failed"
           echo "✅ Snyk authentication complete"
 
       - name: Run SNYK SCA - Requirements.txt
@@ -73,8 +77,13 @@ jobs:
           echo "Current directory: $(pwd)"
           echo "Directory structure:"
           ls -la app/
+          echo "Checking requirements.txt:"
+          wc -l app/requirements.txt
+          head -10 app/requirements.txt
+          echo "..."
           echo "Scanning app/requirements.txt (328 packages)..."
-          snyk test app/ --file=requirements.txt --package-manager=pip --skip-unresolved --json > snyk-requirements.json || true
+          echo "Running: snyk test app/ --file=requirements.txt --package-manager=pip --skip-unresolved --json"
+          snyk test app/ --file=requirements.txt --package-manager=pip --skip-unresolved --json > snyk-requirements.json 2>&1 || echo "Snyk test exited with code: $?"
           echo "Requirements.txt scan complete:"
           ls -lh snyk-requirements.json
           echo "First 1000 chars of results:"
