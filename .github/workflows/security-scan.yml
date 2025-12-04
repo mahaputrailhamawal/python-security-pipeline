@@ -58,8 +58,11 @@ jobs:
         uses: snyk/actions/setup@master
 
       - name: Authenticate Snyk
-        run: snyk auth ${{ secrets.SNYK_TOKEN }}
-        continue-on-error: true
+        run: |
+          echo "🔐 Authenticating with Snyk..."
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          snyk config get api
+          echo "✅ Snyk authentication complete"
 
       - name: Run SNYK SCA
         continue-on-error: true
@@ -68,9 +71,16 @@ jobs:
         run: |
           echo "📦 Running Snyk SCA scan..."
           echo "Current directory: $(pwd)"
+          echo "Contents of app/:"
           ls -la app/
+          echo "Running Snyk scan..."
           cd app && snyk test --skip-unresolved --json > ../snyk-results.json || true
-          cd .. && ls -lh snyk-results.json
+          cd ..
+          echo "Scan complete. Checking results file:"
+          ls -lh snyk-results.json
+          echo "First 500 bytes of results:"
+          head -c 500 snyk-results.json
+          echo ""
           echo "✅ Snyk scan complete"
 
       - name: Upload Snyk Report to DefectDojo
