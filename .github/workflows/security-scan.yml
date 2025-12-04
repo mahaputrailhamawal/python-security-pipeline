@@ -71,13 +71,17 @@ jobs:
         run: |
           echo "📦 Running Snyk SCA scan on requirements.txt..."
           echo "Current directory: $(pwd)"
-          echo "Scanning requirements.txt (328 packages)..."
-          cd app
-          snyk test --file=requirements.txt --package-manager=pip --skip-unresolved --json > ../snyk-requirements.json || true
-          cd ..
+          echo "Directory structure:"
+          ls -la app/
+          echo "Scanning app/requirements.txt (328 packages)..."
+          snyk test app/ --file=requirements.txt --package-manager=pip --skip-unresolved --json > snyk-requirements.json || true
           echo "Requirements.txt scan complete:"
           ls -lh snyk-requirements.json
-          cat snyk-requirements.json
+          echo "First 1000 chars of results:"
+          head -c 1000 snyk-requirements.json
+          echo ""
+          echo "Checking vulnerabilities count:"
+          cat snyk-requirements.json | python3 -c "import json,sys; data=json.load(sys.stdin); print(f'Dependencies: {data.get(\"dependencyCount\", 0)}'); print(f'Vulnerabilities: {len(data.get(\"vulnerabilities\", []))}')" || echo "Failed to parse JSON"
 
       # - name: Run SNYK SCA - Poetry.lock
       #   continue-on-error: true
@@ -100,9 +104,9 @@ jobs:
           ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
         run: |
           echo "📤 Uploading Snyk requirements.txt scan to DefectDojo..."
-          ls -lh snyk-requirements.json
-          cat snyk-requirements.json
-          curl -X POST "${DD_URL}/api/v2/import-scan/" \
+          echo "File size: $(ls -lh snyk-requirements.json | awk '{print $5}')"
+
+          RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -X POST "${DD_URL}/api/v2/import-scan/" \
             -H "Authorization: Token ${DD_TOKEN}" \
             -F "file=@snyk-requirements.json" \
             -F "scan_type=Snyk Scan" \
@@ -111,9 +115,20 @@ jobs:
             -F "active=true" \
             -F "minimum_severity=Low" \
             -F "lead=1" \
-            -F "environment=Production"
+            -F "environment=Production")
 
-          echo "✅ Requirements.txt scan uploaded"
+          HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP_CODE:" | cut -d: -f2)
+          BODY=$(echo "$RESPONSE" | grep -v "HTTP_CODE:")
+
+          echo "Upload status: $HTTP_CODE"
+          if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
+            TEST_ID=$(echo "$BODY" | python3 -c "import json,sys; print(json.load(sys.stdin).get('test', 'N/A'))")
+            STATS=$(echo "$BODY" | python3 -c "import json,sys; data=json.load(sys.stdin); stats=data.get('statistics',{}).get('after',{}).get('total',{}); print(f\"Imported: {stats.get('total',0)} findings\")")
+            echo "✅ Test ID: $TEST_ID"
+            echo "✅ $STATS"
+          else
+            echo "❌ Upload failed: $BODY"
+          fi
 
       # - name: Upload Snyk Poetry.lock Report to DefectDojo
       #   if: always() && hashFiles('snyk-poetry.json') != ''
