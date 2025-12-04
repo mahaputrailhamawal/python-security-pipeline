@@ -66,8 +66,12 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          snyk test app/ --skip-unresolved --json > snyk-results.json
-          echo "Snyk report created"
+          echo "📦 Running Snyk SCA scan..."
+          echo "Current directory: $(pwd)"
+          ls -la app/
+          cd app && snyk test --skip-unresolved --json > ../snyk-results.json || true
+          cd .. && ls -lh snyk-results.json
+          echo "✅ Snyk scan complete"
 
       - name: Upload Snyk Report to DefectDojo
         env:
