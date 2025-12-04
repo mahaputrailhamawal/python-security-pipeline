@@ -46,7 +46,6 @@ jobs:
             -F "minimum_severity=Low" \
             -F "lead=1" \
             -F "environment=Production"
-          echo "Bandit report already send to DefectDojo"
 
       - name: Setup Snyk
         uses: snyk/actions/setup@master
