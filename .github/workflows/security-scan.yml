@@ -66,10 +66,6 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          # Debug: Show current directory and structure
-          echo "Current directory: $(pwd)"
-          echo "App directory contents:"
-          ls -la app/
           snyk test app/ --skip-unresolved --json > snyk-results.json
           echo "Snyk report created"
 
