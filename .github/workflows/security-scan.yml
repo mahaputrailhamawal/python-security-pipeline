@@ -78,7 +78,8 @@ jobs:
           PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
           ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
         run: |
-          echo "Current directory: $(pwd)"
+          echo "Checking if snyk-results.json was created:"
+          ls -la snyk-results.json || echo "File not created"
           ls -la 
           curl -X POST "${DD_URL}/api/v2/import-scan/" \
             -H "Authorization: Token ${DD_TOKEN}" \
