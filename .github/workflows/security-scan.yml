@@ -74,8 +74,7 @@ jobs:
           ls -la app/poetry.lock app/pyproject.toml 2>/dev/null && echo "❌ Poetry files found!" || echo "✓ No poetry files (good!)"
           echo ""
           echo "Running scan from app directory:"
-          cd app && snyk test --file=requirements.txt --package-manager=pip --skip-unresolved --json > ../snyk-results.json 2>&1 || true
-          cd ..
+          snyk test --file=app/requirements.txt --package-manager=pip --skip-unresolved --json > snyk-output.json
           echo ""
           echo "Scan results:"
           ls -lh snyk-results.json
