@@ -82,8 +82,8 @@ jobs:
           head -10 app/requirements.txt
           echo "..."
           echo "Scanning app/requirements.txt (328 packages)..."
-          echo "Running: snyk test app/ --file=requirements.txt --package-manager=pip --skip-unresolved --json"
-          snyk test app/ --file=requirements.txt --package-manager=pip --skip-unresolved --json > snyk-requirements.json 2>&1 || echo "Snyk test exited with code: $?"
+          echo "Running: snyk test --file=app/requirements.txt --package-manager=pip --skip-unresolved --json"
+          snyk test --file=app/requirements.txt --package-manager=pip --skip-unresolved --json > snyk-requirements.json 2>&1 || echo "Snyk test exited with code: $?"
           echo "Requirements.txt scan complete:"
           ls -lh snyk-requirements.json
           echo "First 1000 chars of results:"
