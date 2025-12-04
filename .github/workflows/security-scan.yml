@@ -30,6 +30,7 @@ jobs:
         run: |
           echo "Current directory: $(pwd)"
           echo "Directory contents:"
+          ls -la
           bandit -r app/ -f json -o bandit-results.json || true
           echo "✅ Bandit scan complete"
           echo "Checking if bandit-results.json was created:"
@@ -80,7 +81,10 @@ jobs:
         run: |
           echo "Checking if snyk-results.json was created:"
           ls -la snyk-results.json || echo "File not created"
-          ls -la 
+          echo "Snyk results file content:"
+          cat snyk-results.json || echo "Cannot read file"
+          echo "File size:"
+          wc -c snyk-results.json || echo "Cannot check size"
           curl -X POST "${DD_URL}/api/v2/import-scan/" \
             -H "Authorization: Token ${DD_TOKEN}" \
             -F "file=@snyk-results.json" \
