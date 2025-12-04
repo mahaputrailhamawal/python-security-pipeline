@@ -1,0 +1,11 @@
+
+ ERROR   Unspecified Error (SNYK-CLI-0000)
+                                                                                        
+           Required packages missing: pycairo                                           
+                                                                                        
+           Please run `pip install -r app/requirements.txt`. If the issue persists try  
+           again with --skip-unresolved.                                                
+
+Docs:    https://docs.snyk.io/scan-with-snyk/error-catalog#snyk-cli-0000 
+                                                                         
+ID:      urn:snyk:interaction:f2c26735-5eb3-4c72-bef6-2211701fdb23 
