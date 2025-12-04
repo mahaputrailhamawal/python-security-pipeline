@@ -63,6 +63,12 @@ jobs:
           snyk auth ${{ secrets.SNYK_TOKEN }}
           echo "✅ Snyk authentication complete"
 
+      - name: Install Python Dependencies
+        run: |
+          echo "📦 Installing dependencies from requirements.txt..."
+          pip install -r app/requirements.txt
+          echo "✅ Dependencies installed"
+
       - name: Run SNYK SCA - Requirements.txt
         continue-on-error: true
         env:
