@@ -68,8 +68,10 @@ jobs:
         run: |
           # Debug: Show current directory and structure
           echo "Current directory: $(pwd)"
-          # Run Snyk test on the app directory
-          snyk test app/ --skip-unresolved --json > snyk-results.json || true
+          echo "App directory contents:"
+          ls -la app/
+          # Run Snyk test from inside the app directory
+          cd app/ && snyk test --skip-unresolved --json > ../snyk-results.json || true
           echo "Snyk report created"
 
       - name: Upload Snyk Report to DefectDojo
