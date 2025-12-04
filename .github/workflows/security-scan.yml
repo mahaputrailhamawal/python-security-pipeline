@@ -76,6 +76,7 @@ jobs:
           cd ..
           echo "Requirements.txt scan complete:"
           ls -lh snyk-requirements.json
+          cat snyk-requirements.json
 
       # - name: Run SNYK SCA - Poetry.lock
       #   continue-on-error: true
@@ -99,7 +100,7 @@ jobs:
         run: |
           echo "📤 Uploading Snyk requirements.txt scan to DefectDojo..."
           ls -lh snyk-requirements.json
-
+          cat snyk-requirements.json
           curl -X POST "${DD_URL}/api/v2/import-scan/" \
             -H "Authorization: Token ${DD_TOKEN}" \
             -F "file=@snyk-requirements.json" \
