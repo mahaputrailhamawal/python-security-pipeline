@@ -68,10 +68,18 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          echo "📦 Running Snyk SCA scan on requirements.txt ONLY..."
+          echo "📦 Running Snyk SCA scan on requirements.txt..."
           echo "Current directory: $(pwd)"
-          snyk test app/ --file=requirements.txt --package-manager=pip --skip-unresolved --json > snyk-results.json
-          cat snyk-results.json
+          echo "Verifying no poetry files exist:"
+          ls -la app/ | grep -E "(poetry|pyproject)" || echo "✓ No poetry files (good!)"
+          echo ""
+          echo "Running scan from app directory:"
+          cd app && snyk test --file=requirements.txt --package-manager=pip --skip-unresolved --json > ../snyk-results.json 2>&1 || true
+          cd ..
+          echo ""
+          echo "Scan results:"
+          ls -lh snyk-results.json
+          cat snyk-results.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(f'✅ Dependencies: {d.get(\"dependencyCount\",0)}'); print(f'✅ Vulnerabilities: {len(d.get(\"vulnerabilities\",[]))}'); print(f'✅ Package Manager: {d.get(\"packageManager\",\"N/A\")}')"
           echo "✅ Snyk scan complete"
       # - name: Run SNYK SCA - Poetry.lock
       #   continue-on-error: true
@@ -86,7 +94,7 @@ jobs:
       #     echo "✅ Both Snyk scans complete"
 
       - name: Upload Snyk Requirements.txt Report to DefectDojo
-        if: always() && hashFiles('snyk-requirements.json') != ''
+        if: always() && hashFiles('snyk-results.json') != ''
         env:
           DD_URL: ${{ secrets.DEFECTDOJO_URL }}
           DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
@@ -94,7 +102,7 @@ jobs:
           ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
         run: |
           echo "📤 Uploading Snyk requirements.txt scan to DefectDojo..."
-          echo "File size: $(ls -lh snyk-requirements.json | awk '{print $5}')"
+          echo "File size: $(ls -lh snyk-results.json | awk '{print $5}')"
 
           RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -X POST "${DD_URL}/api/v2/import-scan/" \
             -H "Authorization: Token ${DD_TOKEN}" \
@@ -149,7 +157,7 @@ jobs:
         if: always()
         with:
           name: snyk-requirements-results
-          path: snyk-requirements.json
+          path: snyk-results.json
           retention-days: 30
 
       # - name: Upload Snyk Poetry Artifact
