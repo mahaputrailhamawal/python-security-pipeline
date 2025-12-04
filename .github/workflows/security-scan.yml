@@ -71,7 +71,7 @@ jobs:
           echo "📦 Running Snyk SCA scan on requirements.txt..."
           echo "Current directory: $(pwd)"
           echo "Verifying no poetry files exist:"
-          ls -la app/ | grep -E "(poetry|pyproject)" || echo "✓ No poetry files (good!)"
+          ls -la app/poetry.lock app/pyproject.toml 2>/dev/null && echo "❌ Poetry files found!" || echo "✓ No poetry files (good!)"
           echo ""
           echo "Running scan from app directory:"
           cd app && snyk test --file=requirements.txt --package-manager=pip --skip-unresolved --json > ../snyk-results.json 2>&1 || true
