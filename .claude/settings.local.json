@@ -35,7 +35,12 @@
       "Bash(git -C /home/moose/dev/pyconid-2025 log origin/main --oneline -5)",
       "Bash(git -C /home/moose/dev/pyconid-2025 log -1 --format=\"%H %s\" origin/main)",
       "Bash(git -C /home/moose/dev/pyconid-2025 show HEAD:app/requirements.txt)",
-      "Bash(git -C /home/moose/dev/pyconid-2025 show HEAD:app/snyk-results.json)"
+      "Bash(git -C /home/moose/dev/pyconid-2025 show HEAD:app/snyk-results.json)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 show f7d9df8:app/requirements.txt)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 log --all --full-history -- \"**/requirements.txt\")",
+      "Bash(git -C /home/moose/dev/pyconid-2025 log --all --oneline)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 show 7f93827 --stat)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 show f7d9df8 --stat)"
     ],
     "deny": [],
     "ask": []
