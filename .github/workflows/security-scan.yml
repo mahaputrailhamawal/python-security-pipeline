@@ -124,6 +124,105 @@ jobs:
             fi
           fi
 
+
+      - name: Quality Gate - Bandit (Query from DefectDojo)
+        env:
+          DD_URL: ${{ secrets.DEFECTDOJO_URL }}
+          DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
+          PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
+          ENGAGEMENT_BANDIT: ${{ secrets.ENGAGEMENT_BANDIT }}
+        run: |
+          echo ""
+          echo "=========================================="
+          echo "🎯 Quality Gate - Bandit Scan"
+          echo "=========================================="
+          echo ""
+          echo "🔍 Querying DefectDojo for active findings..."
+
+          # Get engagement ID
+          ENGAGEMENT_RESPONSE=$(curl -s -X GET "${DD_URL}/api/v2/engagements/" \
+            -H "Authorization: Token ${DD_TOKEN}" \
+            -G --data-urlencode "name=${ENGAGEMENT_BANDIT}" \
+            --data-urlencode "product__name=${PRODUCT_NAME}")
+
+          ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | python3 -c "import json,sys; results=json.load(sys.stdin).get('results',[]); print(results[0]['id'] if results else '')" 2>/dev/null || echo "")
+
+          if [ -z "$ENGAGEMENT_ID" ]; then
+            echo "❌ Engagement not found"
+            exit 1
+          fi
+
+          # Query active findings in this engagement
+          FINDINGS_RESPONSE=$(curl -s -X GET "${DD_URL}/api/v2/findings/" \
+            -H "Authorization: Token ${DD_TOKEN}" \
+            -G --data-urlencode "test__engagement=${ENGAGEMENT_ID}" \
+            --data-urlencode "active=true" \
+            --data-urlencode "limit=1000")
+
+          # Count findings by severity
+          STATS=$(echo "$FINDINGS_RESPONSE" | python3 -c "import json,sys; findings=json.load(sys.stdin).get('results',[]); critical=len([f for f in findings if f.get('severity','').lower()=='critical']); high=len([f for f in findings if f.get('severity','').lower()=='high']); medium=len([f for f in findings if f.get('severity','').lower()=='medium']); low=len([f for f in findings if f.get('severity','').lower()=='low']); info=len([f for f in findings if f.get('severity','').lower()=='info']); total=len(findings); print(f'{critical},{high},{medium},{low},{info},{total}')")
+
+          CRITICAL=$(echo $STATS | cut -d',' -f1)
+          HIGH=$(echo $STATS | cut -d',' -f2)
+          MEDIUM=$(echo $STATS | cut -d',' -f3)
+          LOW=$(echo $STATS | cut -d',' -f4)
+          INFO=$(echo $STATS | cut -d',' -f5)
+          TOTAL=$(echo $STATS | cut -d',' -f6)
+
+          # Quality Gate Thresholds
+          MAX_CRITICAL=0
+          MAX_HIGH=3
+          MAX_TOTAL=50
+
+          echo "Active Findings in Bandit Engagement:"
+          echo "  ├─ Critical: ${CRITICAL} (max: ${MAX_CRITICAL})"
+          echo "  ├─ High: ${HIGH} (max: ${MAX_HIGH})"
+          echo "  ├─ Medium: ${MEDIUM}"
+          echo "  ├─ Low: ${LOW}"
+          echo "  ├─ Info: ${INFO}"
+          echo "  └─ Total: ${TOTAL} (max: ${MAX_TOTAL})"
+          echo ""
+
+          GATE_FAILED=0
+
+          # Rule 1: No critical vulnerabilities allowed
+          if [ "$CRITICAL" -gt "$MAX_CRITICAL" ]; then
+            echo "❌ Rule 1 FAILED: ${CRITICAL} critical vulnerabilities (max: ${MAX_CRITICAL})"
+            GATE_FAILED=1
+          else
+            echo "✅ Rule 1 PASSED: Critical vulnerabilities within limit"
+          fi
+
+          # Rule 2: High vulnerabilities must be under threshold
+          if [ "$HIGH" -gt "$MAX_HIGH" ]; then
+            echo "❌ Rule 2 FAILED: ${HIGH} high vulnerabilities (max: ${MAX_HIGH})"
+            GATE_FAILED=1
+          else
+            echo "✅ Rule 2 PASSED: High vulnerabilities within limit"
+          fi
+
+          # Rule 3: Total findings threshold (warning only)
+          if [ "$TOTAL" -gt "$MAX_TOTAL" ]; then
+            echo "⚠️  Rule 3 WARNING: ${TOTAL} total findings (max: ${MAX_TOTAL})"
+          else
+            echo "✅ Rule 3 PASSED: Total findings within limit"
+          fi
+
+          echo ""
+          echo "=========================================="
+          if [ "$GATE_FAILED" -eq 1 ]; then
+            echo "❌ QUALITY GATE FAILED - Bandit"
+            echo "=========================================="
+            echo ""
+            echo "Pipeline FAILED due to security findings threshold exceeded."
+            echo "Please review and fix vulnerabilities in DefectDojo:"
+            echo "${DD_URL}/engagement/${ENGAGEMENT_ID}"
+            exit 1
+          else
+            echo "✅ QUALITY GATE PASSED - Bandit"
+            echo "=========================================="
+          fi
+
       - name: Setup Snyk
         uses: snyk/actions/setup@master
 
@@ -245,6 +344,105 @@ jobs:
               echo "❌ Reimport failed (HTTP ${HTTP_CODE}): ${BODY}"
               exit 1
             fi
+          fi
+
+      - name: Quality Gate - Snyk (Query from DefectDojo)
+        if: always()
+        env:
+          DD_URL: ${{ secrets.DEFECTDOJO_URL }}
+          DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
+          PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
+          ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
+        run: |
+          echo ""
+          echo "=========================================="
+          echo "🎯 Quality Gate - Snyk Scan"
+          echo "=========================================="
+          echo ""
+          echo "🔍 Querying DefectDojo for active findings..."
+
+          # Get engagement ID
+          ENGAGEMENT_RESPONSE=$(curl -s -X GET "${DD_URL}/api/v2/engagements/" \
+            -H "Authorization: Token ${DD_TOKEN}" \
+            -G --data-urlencode "name=${ENGAGEMENT_SNYK}" \
+            --data-urlencode "product__name=${PRODUCT_NAME}")
+
+          ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | python3 -c "import json,sys; results=json.load(sys.stdin).get('results',[]); print(results[0]['id'] if results else '')" 2>/dev/null || echo "")
+
+          if [ -z "$ENGAGEMENT_ID" ]; then
+            echo "❌ Engagement not found"
+            exit 1
+          fi
+
+          # Query active findings in this engagement
+          FINDINGS_RESPONSE=$(curl -s -X GET "${DD_URL}/api/v2/findings/" \
+            -H "Authorization: Token ${DD_TOKEN}" \
+            -G --data-urlencode "test__engagement=${ENGAGEMENT_ID}" \
+            --data-urlencode "active=true" \
+            --data-urlencode "limit=1000")
+
+          # Count findings by severity
+          STATS=$(echo "$FINDINGS_RESPONSE" | python3 -c "import json,sys; findings=json.load(sys.stdin).get('results',[]); critical=len([f for f in findings if f.get('severity','').lower()=='critical']); high=len([f for f in findings if f.get('severity','').lower()=='high']); medium=len([f for f in findings if f.get('severity','').lower()=='medium']); low=len([f for f in findings if f.get('severity','').lower()=='low']); info=len([f for f in findings if f.get('severity','').lower()=='info']); total=len(findings); print(f'{critical},{high},{medium},{low},{info},{total}')")
+
+          CRITICAL=$(echo $STATS | cut -d',' -f1)
+          HIGH=$(echo $STATS | cut -d',' -f2)
+          MEDIUM=$(echo $STATS | cut -d',' -f3)
+          LOW=$(echo $STATS | cut -d',' -f4)
+          INFO=$(echo $STATS | cut -d',' -f5)
+          TOTAL=$(echo $STATS | cut -d',' -f6)
+
+          # Quality Gate Thresholds
+          MAX_CRITICAL=0
+          MAX_HIGH=3
+          MAX_TOTAL=50
+
+          echo "Active Findings in Snyk Engagement:"
+          echo "  ├─ Critical: ${CRITICAL} (max: ${MAX_CRITICAL})"
+          echo "  ├─ High: ${HIGH} (max: ${MAX_HIGH})"
+          echo "  ├─ Medium: ${MEDIUM}"
+          echo "  ├─ Low: ${LOW}"
+          echo "  ├─ Info: ${INFO}"
+          echo "  └─ Total: ${TOTAL} (max: ${MAX_TOTAL})"
+          echo ""
+
+          GATE_FAILED=0
+
+          # Rule 1: No critical vulnerabilities allowed
+          if [ "$CRITICAL" -gt "$MAX_CRITICAL" ]; then
+            echo "❌ Rule 1 FAILED: ${CRITICAL} critical vulnerabilities (max: ${MAX_CRITICAL})"
+            GATE_FAILED=1
+          else
+            echo "✅ Rule 1 PASSED: Critical vulnerabilities within limit"
+          fi
+
+          # Rule 2: High vulnerabilities must be under threshold
+          if [ "$HIGH" -gt "$MAX_HIGH" ]; then
+            echo "❌ Rule 2 FAILED: ${HIGH} high vulnerabilities (max: ${MAX_HIGH})"
+            GATE_FAILED=1
+          else
+            echo "✅ Rule 2 PASSED: High vulnerabilities within limit"
+          fi
+
+          # Rule 3: Total findings threshold (warning only)
+          if [ "$TOTAL" -gt "$MAX_TOTAL" ]; then
+            echo "⚠️  Rule 3 WARNING: ${TOTAL} total findings (max: ${MAX_TOTAL})"
+          else
+            echo "✅ Rule 3 PASSED: Total findings within limit"
+          fi
+
+          echo ""
+          echo "=========================================="
+          if [ "$GATE_FAILED" -eq 1 ]; then
+            echo "❌ QUALITY GATE FAILED - Snyk"
+            echo "=========================================="
+            echo ""
+            echo "Pipeline FAILED due to security findings threshold exceeded."
+            echo "Please review and fix vulnerabilities in DefectDojo:"
+            echo "${DD_URL}/engagement/${ENGAGEMENT_ID}"
+            exit 1
+          else
+            echo "✅ QUALITY GATE PASSED - Snyk"
+            echo "=========================================="
           fi
 
       - name: Upload Snyk Requirements Artifact
