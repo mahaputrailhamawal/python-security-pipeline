@@ -40,7 +40,9 @@
       "Bash(git -C /home/moose/dev/pyconid-2025 log --all --full-history -- \"**/requirements.txt\")",
       "Bash(git -C /home/moose/dev/pyconid-2025 log --all --oneline)",
       "Bash(git -C /home/moose/dev/pyconid-2025 show 7f93827 --stat)",
-      "Bash(git -C /home/moose/dev/pyconid-2025 show f7d9df8 --stat)"
+      "Bash(git -C /home/moose/dev/pyconid-2025 show f7d9df8 --stat)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 add app/requirements.txt)",
+      "Bash(git -C /home/moose/dev/pyconid-2025 commit -m \"$(cat <<''EOF''\nfix: Pin vulnerable package versions to match CLI environment\n\n- Pin Jinja2==3.1.4 (has 3 known vulnerabilities)\n- Pin Werkzeug==3.0.4 (has 2 known vulnerabilities)\n- Pin other package versions for consistency\n- This ensures pipeline detects same vulnerabilities as CLI\n- Total expected: 6 vulnerabilities in Snyk scan\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []

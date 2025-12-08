@@ -77,22 +77,9 @@ jobs:
           echo "📦 Running Snyk SCA scan on requirements.txt..."
           echo "Current directory: $(pwd)"
           echo ""
-          echo "Verifying requirements.txt exists:"
-          ls -lh app/requirements.txt
-          echo "First 10 lines of requirements.txt:"
-          head -10 app/requirements.txt
-          echo ""
           echo "Running Snyk scan..."
           cd app && snyk test --file=requirements.txt --package-manager=pip --skip-unresolved --json > ../snyk-results.json 2>&1 || true
           cd ..
-          echo ""
-          echo "Scan results file:"
-          ls -lh snyk-results.json
-          echo ""
-          echo "First 500 chars of scan result:"
-          head -c 500 snyk-results.json
-          echo ""
-          echo ""
           echo "Parsing JSON:"
           cat snyk-results.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(f'✅ Dependencies: {d.get(\"dependencyCount\",0)}'); print(f'✅ Vulnerabilities: {len(d.get(\"vulnerabilities\",[]))}'); print(f'✅ Package Manager: {d.get(\"packageManager\",\"N/A\")}')"
           echo "✅ Snyk scan complete"
