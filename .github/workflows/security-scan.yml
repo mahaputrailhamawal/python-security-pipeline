@@ -43,16 +43,86 @@ jobs:
           PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
           ENGAGEMENT_BANDIT: ${{ secrets.ENGAGEMENT_BANDIT }}
         run: |
-          curl -X POST "${DD_URL}/api/v2/import-scan/" \
+          echo "🔍 Step 1: Get Engagement ID..."
+          ENGAGEMENT_RESPONSE=$(curl -s -X GET "${DD_URL}/api/v2/engagements/" \
             -H "Authorization: Token ${DD_TOKEN}" \
-            -F "file=@bandit-results.json" \
-            -F "scan_type=Bandit Scan" \
-            -F "product_name=${PRODUCT_NAME}" \
-            -F "engagement_name=${ENGAGEMENT_BANDIT}" \
-            -F "active=true" \
-            -F "minimum_severity=Low" \
-            -F "lead=1" \
-            -F "environment=Production"
+            -G --data-urlencode "name=${ENGAGEMENT_BANDIT}" \
+            --data-urlencode "product__name=${PRODUCT_NAME}")
+
+          ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | python3 -c "import json,sys; results=json.load(sys.stdin).get('results',[]); print(results[0]['id'] if results else '')" 2>/dev/null || echo "")
+
+          if [ -z "$ENGAGEMENT_ID" ]; then
+            echo "❌ Engagement not found: ${ENGAGEMENT_BANDIT}"
+            exit 1
+          fi
+
+          echo "✅ Found Engagement ID: ${ENGAGEMENT_ID}"
+
+          echo ""
+          echo "🔍 Step 2: Check for existing Bandit test..."
+          TESTS_RESPONSE=$(curl -s -X GET "${DD_URL}/api/v2/tests/" \
+            -H "Authorization: Token ${DD_TOKEN}" \
+            -G --data-urlencode "engagement=${ENGAGEMENT_ID}" \
+            --data-urlencode "scan_type=Bandit Scan")
+
+          TEST_ID=$(echo "$TESTS_RESPONSE" | python3 -c "import json,sys; results=json.load(sys.stdin).get('results',[]); sorted_results=sorted(results, key=lambda x: x.get('id',0), reverse=True); print(sorted_results[0]['id'] if sorted_results else '')" 2>/dev/null || echo "")
+
+          echo ""
+          if [ -z "$TEST_ID" ]; then
+            echo "📝 Step 3a: No existing test found - Creating NEW test with import-scan..."
+            RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -X POST "${DD_URL}/api/v2/import-scan/" \
+              -H "Authorization: Token ${DD_TOKEN}" \
+              -F "file=@bandit-results.json" \
+              -F "scan_type=Bandit Scan" \
+              -F "product_name=${PRODUCT_NAME}" \
+              -F "engagement_name=${ENGAGEMENT_BANDIT}" \
+              -F "active=true" \
+              -F "verified=false" \
+              -F "minimum_severity=Low" \
+              -F "close_old_findings=false" \
+              -F "push_to_jira=false" \
+              -F "lead=1" \
+              -F "environment=Production")
+
+            HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP_CODE:" | cut -d: -f2)
+            BODY=$(echo "$RESPONSE" | grep -v "HTTP_CODE:")
+
+            if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
+              NEW_TEST_ID=$(echo "$BODY" | python3 -c "import json,sys; print(json.load(sys.stdin).get('test', 'N/A'))")
+              STATS=$(echo "$BODY" | python3 -c "import json,sys; data=json.load(sys.stdin); stats=data.get('statistics',{}).get('after',{}).get('total',{}); print(f\"Total: {stats.get('total',0)}, Critical: {stats.get('critical',0)}, High: {stats.get('high',0)}, Medium: {stats.get('medium',0)}, Low: {stats.get('low',0)}\")")
+              echo "✅ Created NEW Test ID: ${NEW_TEST_ID}"
+              echo "✅ Findings: ${STATS}"
+            else
+              echo "❌ Import failed (HTTP ${HTTP_CODE}): ${BODY}"
+              exit 1
+            fi
+          else
+            echo "🔄 Step 3b: Found existing Test ID ${TEST_ID} - Using REIMPORT to avoid duplicates..."
+            RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -X POST "${DD_URL}/api/v2/reimport-scan/" \
+              -H "Authorization: Token ${DD_TOKEN}" \
+              -F "file=@bandit-results.json" \
+              -F "scan_type=Bandit Scan" \
+              -F "test=${TEST_ID}" \
+              -F "active=true" \
+              -F "verified=false" \
+              -F "minimum_severity=Low" \
+              -F "close_old_findings=true" \
+              -F "push_to_jira=false")
+
+            HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP_CODE:" | cut -d: -f2)
+            BODY=$(echo "$RESPONSE" | grep -v "HTTP_CODE:")
+
+            if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
+              STATS_AFTER=$(echo "$BODY" | python3 -c "import json,sys; data=json.load(sys.stdin); stats=data.get('statistics',{}).get('after',{}).get('total',{}); print(f\"Total: {stats.get('total',0)}, Critical: {stats.get('critical',0)}, High: {stats.get('high',0)}, Medium: {stats.get('medium',0)}, Low: {stats.get('low',0)}\")")
+              STATS_DELTA=$(echo "$BODY" | python3 -c "import json,sys; data=json.load(sys.stdin); delta=data.get('statistics',{}).get('delta',{}).get('total',{}); print(f\"Δ Total: {delta.get('total',0):+d}, Δ Critical: {delta.get('critical',0):+d}, Δ High: {delta.get('high',0):+d}, Δ Medium: {delta.get('medium',0):+d}, Δ Low: {delta.get('low',0):+d}\")")
+              echo "✅ Reimported to Test ID: ${TEST_ID}"
+              echo "✅ Current Findings: ${STATS_AFTER}"
+              echo "✅ Changes: ${STATS_DELTA} (+ = new findings, - = closed/fixed)"
+            else
+              echo "❌ Reimport failed (HTTP ${HTTP_CODE}): ${BODY}"
+              exit 1
+            fi
+          fi
 
       - name: Setup Snyk
         uses: snyk/actions/setup@master
@@ -92,31 +162,89 @@ jobs:
           PRODUCT_NAME: ${{ secrets.PRODUCT_NAME }}
           ENGAGEMENT_SNYK: ${{ secrets.ENGAGEMENT_SNYK }}
         run: |
-          echo "📤 Uploading Snyk requirements.txt scan to DefectDojo..."
+          echo "📤 Uploading Snyk scan to DefectDojo..."
           echo "File size: $(ls -lh snyk-results.json | awk '{print $5}')"
+          echo ""
 
-          RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -X POST "${DD_URL}/api/v2/import-scan/" \
+          echo "🔍 Step 1: Get Engagement ID..."
+          ENGAGEMENT_RESPONSE=$(curl -s -X GET "${DD_URL}/api/v2/engagements/" \
             -H "Authorization: Token ${DD_TOKEN}" \
-            -F "file=@snyk-results.json" \
-            -F "scan_type=Snyk Scan" \
-            -F "product_name=${PRODUCT_NAME}" \
-            -F "engagement_name=${ENGAGEMENT_SNYK}" \
-            -F "active=true" \
-            -F "minimum_severity=Low" \
-            -F "lead=1" \
-            -F "environment=Production")
+            -G --data-urlencode "name=${ENGAGEMENT_SNYK}" \
+            --data-urlencode "product__name=${PRODUCT_NAME}")
 
-          HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP_CODE:" | cut -d: -f2)
-          BODY=$(echo "$RESPONSE" | grep -v "HTTP_CODE:")
+          ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | python3 -c "import json,sys; results=json.load(sys.stdin).get('results',[]); print(results[0]['id'] if results else '')" 2>/dev/null || echo "")
 
-          echo "Upload status: $HTTP_CODE"
-          if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
-            TEST_ID=$(echo "$BODY" | python3 -c "import json,sys; print(json.load(sys.stdin).get('test', 'N/A'))")
-            STATS=$(echo "$BODY" | python3 -c "import json,sys; data=json.load(sys.stdin); stats=data.get('statistics',{}).get('after',{}).get('total',{}); print(f\"Imported: {stats.get('total',0)} findings\")")
-            echo "✅ Test ID: $TEST_ID"
-            echo "✅ $STATS"
+          if [ -z "$ENGAGEMENT_ID" ]; then
+            echo "❌ Engagement not found: ${ENGAGEMENT_SNYK}"
+            exit 1
+          fi
+
+          echo "✅ Found Engagement ID: ${ENGAGEMENT_ID}"
+
+          echo ""
+          echo "🔍 Step 2: Check for existing Snyk test..."
+          TESTS_RESPONSE=$(curl -s -X GET "${DD_URL}/api/v2/tests/" \
+            -H "Authorization: Token ${DD_TOKEN}" \
+            -G --data-urlencode "engagement=${ENGAGEMENT_ID}" \
+            --data-urlencode "scan_type=Snyk Scan")
+
+          TEST_ID=$(echo "$TESTS_RESPONSE" | python3 -c "import json,sys; results=json.load(sys.stdin).get('results',[]); sorted_results=sorted(results, key=lambda x: x.get('id',0), reverse=True); print(sorted_results[0]['id'] if sorted_results else '')" 2>/dev/null || echo "")
+
+          echo ""
+          if [ -z "$TEST_ID" ]; then
+            echo "📝 Step 3a: No existing test found - Creating NEW test with import-scan..."
+            RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -X POST "${DD_URL}/api/v2/import-scan/" \
+              -H "Authorization: Token ${DD_TOKEN}" \
+              -F "file=@snyk-results.json" \
+              -F "scan_type=Snyk Scan" \
+              -F "product_name=${PRODUCT_NAME}" \
+              -F "engagement_name=${ENGAGEMENT_SNYK}" \
+              -F "active=true" \
+              -F "verified=false" \
+              -F "minimum_severity=Low" \
+              -F "close_old_findings=false" \
+              -F "push_to_jira=false" \
+              -F "lead=1" \
+              -F "environment=Production")
+
+            HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP_CODE:" | cut -d: -f2)
+            BODY=$(echo "$RESPONSE" | grep -v "HTTP_CODE:")
+
+            if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
+              NEW_TEST_ID=$(echo "$BODY" | python3 -c "import json,sys; print(json.load(sys.stdin).get('test', 'N/A'))")
+              STATS=$(echo "$BODY" | python3 -c "import json,sys; data=json.load(sys.stdin); stats=data.get('statistics',{}).get('after',{}).get('total',{}); print(f\"Total: {stats.get('total',0)}, Critical: {stats.get('critical',0)}, High: {stats.get('high',0)}, Medium: {stats.get('medium',0)}, Low: {stats.get('low',0)}\")")
+              echo "✅ Created NEW Test ID: ${NEW_TEST_ID}"
+              echo "✅ Findings: ${STATS}"
+            else
+              echo "❌ Import failed (HTTP ${HTTP_CODE}): ${BODY}"
+              exit 1
+            fi
           else
-            echo "❌ Upload failed: $BODY"
+            echo "🔄 Step 3b: Found existing Test ID ${TEST_ID} - Using REIMPORT to avoid duplicates..."
+            RESPONSE=$(curl -s -w "\nHTTP_CODE:%{http_code}" -X POST "${DD_URL}/api/v2/reimport-scan/" \
+              -H "Authorization: Token ${DD_TOKEN}" \
+              -F "file=@snyk-results.json" \
+              -F "scan_type=Snyk Scan" \
+              -F "test=${TEST_ID}" \
+              -F "active=true" \
+              -F "verified=false" \
+              -F "minimum_severity=Low" \
+              -F "close_old_findings=true" \
+              -F "push_to_jira=false")
+
+            HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP_CODE:" | cut -d: -f2)
+            BODY=$(echo "$RESPONSE" | grep -v "HTTP_CODE:")
+
+            if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
+              STATS_AFTER=$(echo "$BODY" | python3 -c "import json,sys; data=json.load(sys.stdin); stats=data.get('statistics',{}).get('after',{}).get('total',{}); print(f\"Total: {stats.get('total',0)}, Critical: {stats.get('critical',0)}, High: {stats.get('high',0)}, Medium: {stats.get('medium',0)}, Low: {stats.get('low',0)}\")")
+              STATS_DELTA=$(echo "$BODY" | python3 -c "import json,sys; data=json.load(sys.stdin); delta=data.get('statistics',{}).get('delta',{}).get('total',{}); print(f\"Δ Total: {delta.get('total',0):+d}, Δ Critical: {delta.get('critical',0):+d}, Δ High: {delta.get('high',0):+d}, Δ Medium: {delta.get('medium',0):+d}, Δ Low: {delta.get('low',0):+d}\")")
+              echo "✅ Reimported to Test ID: ${TEST_ID}"
+              echo "✅ Current Findings: ${STATS_AFTER}"
+              echo "✅ Changes: ${STATS_DELTA} (+ = new findings, - = closed/fixed)"
+            else
+              echo "❌ Reimport failed (HTTP ${HTTP_CODE}): ${BODY}"
+              exit 1
+            fi
           fi
 
       - name: Upload Snyk Requirements Artifact
