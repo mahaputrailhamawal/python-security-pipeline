@@ -1,1 +1,0 @@
-# DefectDojo Safety Scan Parser
