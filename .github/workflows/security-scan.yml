@@ -347,7 +347,7 @@ jobs:
           fi
 
       - name: Quality Gate - Snyk (Query from DefectDojo)
-        if: always()
+        if: success()
         env:
           DD_URL: ${{ secrets.DEFECTDOJO_URL }}
           DD_TOKEN: ${{ secrets.DEFECTDOJO_TOKEN }}
